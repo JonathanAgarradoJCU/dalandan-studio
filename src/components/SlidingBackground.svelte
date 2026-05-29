@@ -1,64 +1,77 @@
-<div class="sliding-background lane-a"></div>
-<div class="sliding-background lane-b"></div>
+<script>
+  import { onMount } from 'svelte';
+
+  let laneCount = $state(0);
+  const tileSize = 150;
+
+  onMount(() => {
+    laneCount = Math.ceil(window.innerWidth / tileSize) + 1;
+
+    function handleResize() {
+      laneCount = Math.ceil(window.innerWidth / tileSize) + 1;
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
+</script>
+
+<div class="sliding-container">
+  {#each Array(laneCount) as _, i}
+    <div
+      class="lane"
+      class:lane-down={i % 2 === 0}
+      class:lane-up={i % 2 !== 0}
+    ></div>
+  {/each}
+</div>
 
 <style>
-  .sliding-background {
+  .sliding-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+  }
+
+  .lane {
+    width: 150px;
+    flex-shrink: 0;
+    height: calc(100vh + 150px);
     background-image: url('../assets/cross-pattern.png');
     background-repeat: repeat;
     background-size: 150px 150px;
     opacity: 0.3;
-    z-index: 1;
-    pointer-events: none;
   }
 
-  .lane-a {
-    -webkit-mask-image: repeating-linear-gradient(
-      to right,
-      black 0px, black 150px,
-      transparent 150px, transparent 300px
-    );
-    mask-image: repeating-linear-gradient(
-      to right,
-      black 0px, black 150px,
-      transparent 150px, transparent 300px
-    );
-    animation: slide-diag-forward 10s linear infinite;
+  .lane-down {
+    animation: slide-down 10s linear infinite;
   }
 
-  .lane-b {
-    -webkit-mask-image: repeating-linear-gradient(
-      to right,
-      transparent 0px, transparent 150px,
-      black 150px, black 300px
-    );
-    mask-image: repeating-linear-gradient(
-      to right,
-      transparent 0px, transparent 150px,
-      black 150px, black 300px
-    );
-    animation: slide-diag-reverse 10s linear infinite;
+  .lane-up {
+    animation: slide-up 10s linear infinite;
   }
 
-  @keyframes slide-diag-forward {
+  @keyframes slide-down {
     from {
-      background-position: 0 0;
+      transform: translateY(-150px);
     }
     to {
-      background-position: 150px 150px;
+      transform: translateY(0);
     }
   }
 
-  @keyframes slide-diag-reverse {
+  @keyframes slide-up {
     from {
-      background-position: 0 0;
+      transform: translateY(0);
     }
     to {
-      background-position: -150px -150px;
+      transform: translateY(-150px);
     }
   }
 </style>
