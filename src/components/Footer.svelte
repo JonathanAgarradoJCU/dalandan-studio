@@ -14,10 +14,15 @@
 
 <style>
   .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 1rem;
     font-size: 0.9rem;
     color: #565656;
     background-color: transparent;
+    z-index: 10;
   }
 </style>
