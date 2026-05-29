@@ -18,12 +18,12 @@
 
   .lane-a {
     -webkit-mask-image: repeating-linear-gradient(
-      45deg,
+      to right,
       black 0px, black 150px,
       transparent 150px, transparent 300px
     );
     mask-image: repeating-linear-gradient(
-      45deg,
+      to right,
       black 0px, black 150px,
       transparent 150px, transparent 300px
     );
@@ -32,12 +32,12 @@
 
   .lane-b {
     -webkit-mask-image: repeating-linear-gradient(
-      45deg,
+      to right,
       transparent 0px, transparent 150px,
       black 150px, black 300px
     );
     mask-image: repeating-linear-gradient(
-      45deg,
+      to right,
       transparent 0px, transparent 150px,
       black 150px, black 300px
     );
