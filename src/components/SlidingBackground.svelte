@@ -1,5 +1,5 @@
-<div class="sliding-background layer-1"></div>
-<div class="sliding-background layer-2"></div>
+<div class="sliding-background lane-a"></div>
+<div class="sliding-background lane-b"></div>
 
 <style>
   .sliding-background {
@@ -16,15 +16,35 @@
     pointer-events: none;
   }
 
-  .layer-1 {
-    animation: slide-forward 10s linear infinite;
+  .lane-a {
+    -webkit-mask-image: repeating-linear-gradient(
+      45deg,
+      black 0px, black 150px,
+      transparent 150px, transparent 300px
+    );
+    mask-image: repeating-linear-gradient(
+      45deg,
+      black 0px, black 150px,
+      transparent 150px, transparent 300px
+    );
+    animation: slide-diag-forward 10s linear infinite;
   }
 
-  .layer-2 {
-    animation: slide-reverse 10s linear infinite;
+  .lane-b {
+    -webkit-mask-image: repeating-linear-gradient(
+      45deg,
+      transparent 0px, transparent 150px,
+      black 150px, black 300px
+    );
+    mask-image: repeating-linear-gradient(
+      45deg,
+      transparent 0px, transparent 150px,
+      black 150px, black 300px
+    );
+    animation: slide-diag-reverse 10s linear infinite;
   }
 
-  @keyframes slide-forward {
+  @keyframes slide-diag-forward {
     from {
       background-position: 0 0;
     }
@@ -33,7 +53,7 @@
     }
   }
 
-  @keyframes slide-reverse {
+  @keyframes slide-diag-reverse {
     from {
       background-position: 0 0;
     }
