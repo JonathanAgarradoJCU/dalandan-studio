@@ -52,8 +52,8 @@
 
 <style>
   .navbar {
-    background-color: #1a1a1a;
-    color: #fff;
+  background-color: #c2b184;
+    color: #ceb9b9;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,7 +64,7 @@
   }
 
   .nav-logo a {
-    color: #fff;
+    color: #000000;
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
@@ -77,7 +77,7 @@
   }
 
   .nav-links a {
-    color: #18bbcd;
+    color: #000000;
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
@@ -85,7 +85,7 @@
   }
 
   .nav-links a:hover {
-    color: #ffae4a;
+    color: #ffffff;
     font-weight: bold;
   }
 
