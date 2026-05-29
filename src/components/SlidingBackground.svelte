@@ -1,18 +1,22 @@
 <script>
   import { onMount } from 'svelte';
+  import crossPattern from '../assets/cross-pattern.png';
 
   let laneCount = $state(0);
+  let tilesPerLane = $state(0);
   const tileSize = 150;
+  const gap = 30;
+  const step = tileSize + gap;
+
+  function recalc() {
+    laneCount = Math.ceil(window.innerWidth / tileSize) + 1;
+    tilesPerLane = Math.ceil((window.innerHeight + step) / step) + 1;
+  }
 
   onMount(() => {
-    laneCount = Math.ceil(window.innerWidth / tileSize) + 1;
-
-    function handleResize() {
-      laneCount = Math.ceil(window.innerWidth / tileSize) + 1;
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    recalc();
+    window.addEventListener('resize', recalc);
+    return () => window.removeEventListener('resize', recalc);
   });
 </script>
 
@@ -22,7 +26,11 @@
       class="lane"
       class:lane-down={i % 2 === 0}
       class:lane-up={i % 2 !== 0}
-    ></div>
+    >
+      {#each Array(tilesPerLane) as _}
+        <img src={crossPattern} alt="" class="tile" />
+      {/each}
+    </div>
   {/each}
 </div>
 
@@ -37,16 +45,22 @@
     z-index: 1;
     pointer-events: none;
     display: flex;
+    opacity: 0.3;
   }
 
   .lane {
     width: 150px;
     flex-shrink: 0;
-    height: calc(100vh + 150px);
-    background-image: url('../assets/cross-pattern.png');
-    background-repeat: repeat;
-    background-size: 150px 150px;
-    opacity: 0.3;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .tile {
+    width: 150px;
+    height: 150px;
+    display: block;
+    flex-shrink: 0;
   }
 
   .lane-down {
@@ -59,7 +73,7 @@
 
   @keyframes slide-down {
     from {
-      transform: translateY(-150px);
+      transform: translateY(-180px);
     }
     to {
       transform: translateY(0);
@@ -71,7 +85,7 @@
       transform: translateY(0);
     }
     to {
-      transform: translateY(-150px);
+      transform: translateY(-180px);
     }
   }
 </style>
