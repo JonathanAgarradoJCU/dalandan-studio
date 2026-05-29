@@ -1,0 +1,19 @@
+{
+  "name": "dalandan-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The official website and service portfolio for DalanDan Studio — showcasing creative furry art, music production/transcription, and web development.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "svelte": "^5.55.10"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "vite": "^8.0.14"
+  }
+}
