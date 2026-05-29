@@ -9,6 +9,7 @@
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
+    min-height: calc(100vh - 60px - 60px);
     display: flex;
     justify-content: center;
     align-items: center;
