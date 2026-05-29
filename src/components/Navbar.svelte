@@ -114,7 +114,7 @@
       top: 100%;
       left: 0;
       width: 100%;
-      background-color: #c2b184cb;
+      background-color: #ccaa76d5;
       padding: 2rem 0;
       text-align: center;
       transform: translateY(-150%);
