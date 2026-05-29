@@ -32,7 +32,7 @@
 
 <nav class="navbar">
   <div class="nav-logo">
-    <a href="#">DalanDan Studio</a>
+    <a href="#/">DalanDan Studio</a>
   </div>
 
   <button
@@ -44,9 +44,9 @@
   </button>
 
   <ul class="nav-links" class:active={menuOpen}>
-    <li><a href="#" onclick={closeMenu}>Home</a></li>
-    <li><a href="#contact-me" onclick={closeMenu}>Contact Me</a></li>
-    <li><a href="#about-me" onclick={closeMenu}>About Me</a></li>
+    <li><a href="#/" onclick={closeMenu}>Home</a></li>
+    <li><a href="#/contact-me" onclick={closeMenu}>Contact Me</a></li>
+    <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
   </ul>
 </nav>
 
