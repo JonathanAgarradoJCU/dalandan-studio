@@ -1,32 +1,20 @@
 <script>
+  import Router from 'svelte-spa-router';
   import Navbar from './components/Navbar.svelte';
   import Footer from './components/Footer.svelte';
+  import Home from './pages/Home.svelte';
+  import ContactMe from './pages/ContactMe.svelte';
+  import AboutMe from './pages/AboutMe.svelte';
+
+  const routes = {
+    '/': Home,
+    '/contact-me': ContactMe,
+    '/about-me': AboutMe,
+  };
 </script>
 
 <Navbar />
 
-<main class="main-content">
-  <h1>Dalandan Studio is coming soon! 🍊</h1>
-</main>
+<Router {routes} />
 
 <Footer />
-
-<style>
-  .main-content {
-    flex: 1;
-    padding: 3rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .main-content h1 {
-    font-size: 2.5rem;
-    font-family: Arial, sans-serif;
-    font-style: italic;
-  }
-</style>
