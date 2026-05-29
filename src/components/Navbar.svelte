@@ -52,7 +52,7 @@
 
 <style>
   .navbar {
-  background-color: #c2b184;
+  background-color: #ccaa76;
     color: #ceb9b9;
     display: flex;
     justify-content: space-between;
@@ -93,7 +93,7 @@
     display: none;
     background: none;
     border: none;
-    color: #fff;
+    color: #000000;
     font-size: 1.8rem;
     cursor: pointer;
     z-index: 110;
@@ -114,7 +114,7 @@
       top: 100%;
       left: 0;
       width: 100%;
-      background-color: #1a1a1a;
+      background-color: #c2b184cb;
       padding: 2rem 0;
       text-align: center;
       transform: translateY(-150%);

@@ -16,6 +16,7 @@
     align-items: center;
     text-align: center;
     gap: 1rem;
+    min-height: calc(100vh - 200px);
   }
 
   .main-content h1 {
