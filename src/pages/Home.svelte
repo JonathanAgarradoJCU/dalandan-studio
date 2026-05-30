@@ -1,6 +1,10 @@
 <main class="main-content">
-  <div class="content-bar">
-    <h1>DalanDan Studio is coming soon! 🍊</h1>
+  <div class="circles-container">
+    <div class="circle"></div>
+    <div class="circle-row">
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
   </div>
 </main>
 
@@ -20,27 +24,40 @@
     z-index: 10;
   }
 
-  .content-bar {
-    background-color: rgba(233, 185, 112, 0.9);
-    border-radius: 1rem;
-    padding: 0;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  .circles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
   }
 
-  .main-content h1 {
-    font-size: 3rem;
-font-family: "Goudy Bookletter 1911", sans-serif;
-    opacity: 1;
-    color: black;
-    padding: 0.5rem 1rem;
-    position: relative;
-    z-index: 20;
+  .circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: rgba(233, 185, 112, 0.9);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .circle:hover {
+    transform: scale(1.05);
+  }
+
+  .circle-row {
+    display: flex;
+    gap: 3rem;
   }
 
   @media (max-width: 768px) {
-    .main-content h1 {
-      font-size: 1.8rem;
-      padding: 0.3rem 0.8rem;
+    .circle {
+      width: 80px;
+      height: 80px;
+    }
+
+    .circle-row {
+      gap: 2rem;
     }
   }
 </style>
