@@ -35,6 +35,12 @@
     <a href="#/">DalanDan Studio</a>
   </div>
 
+  <ul class="nav-links" class:active={menuOpen}>
+    <li><a href="#/" onclick={closeMenu}>Home</a></li>
+    <li><a href="#/contact-me" onclick={closeMenu}>Contact Me</a></li>
+    <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
+  </ul>
+
   <button
     class="menu-toggle"
     aria-label="Toggle navigation"
@@ -42,17 +48,11 @@
   >
     {menuOpen ? '✕' : '☰'}
   </button>
-
-  <ul class="nav-links" class:active={menuOpen}>
-    <li><a href="#/" onclick={closeMenu}>Home</a></li>
-    <li><a href="#/contact-me" onclick={closeMenu}>Contact Me</a></li>
-    <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
-  </ul>
 </nav>
 
 <style>
   .navbar {
-  background-color: #ccaa76;
+  background-color: #e9b970;
     color: #ceb9b9;
     display: flex;
     justify-content: space-between;
@@ -60,7 +60,7 @@
     padding: 1rem 2rem;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
   }
 
   .nav-logo a {
@@ -74,12 +74,13 @@
     display: flex;
     list-style: none;
     gap: 1.5rem;
+    z-index: 90;
   }
 
   .nav-links a {
     color: #000000;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: bold;
     transition: color 0.3s;
   }
@@ -119,7 +120,7 @@
       text-align: center;
       transform: translateY(-150%);
       transition: transform 0.4s ease-in-out;
-      z-index: 50;
+      z-index: -1;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     }
 
@@ -131,6 +132,11 @@
   @media (min-width: 769px) {
     .nav-links {
       transform: none !important;
+      position: static;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+      z-index: auto;
     }
   }
 </style>

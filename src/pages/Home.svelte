@@ -1,5 +1,7 @@
 <main class="main-content">
-  <h1>Dalandan Studio is coming soon! 🍊</h1>
+  <div class="content-bar">
+    <h1>DalanDan Studio is coming soon! 🍊</h1>
+  </div>
 </main>
 
 <style>
@@ -18,14 +20,27 @@
     z-index: 10;
   }
 
+  .content-bar {
+    background-color: rgba(233, 185, 112, 0.9);
+    border-radius: 1rem;
+    padding: 0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
   .main-content h1 {
-    font-size: 2.5rem;
-    font-family: Arial, sans-serif;
-    font-style: italic;
+    font-size: 3rem;
+font-family: "Goudy Bookletter 1911", sans-serif;
     opacity: 1;
     color: black;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     position: relative;
     z-index: 20;
+  }
+
+  @media (max-width: 768px) {
+    .main-content h1 {
+      font-size: 1.8rem;
+      padding: 0.3rem 0.8rem;
+    }
   }
 </style>

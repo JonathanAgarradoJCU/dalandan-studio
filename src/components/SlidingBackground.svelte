@@ -45,7 +45,8 @@
     z-index: -1;
     pointer-events: none;
     display: flex;
-    opacity: 0.9;
+    justify-content: center;
+    opacity: 0.85;
   }
 
   .lane {
