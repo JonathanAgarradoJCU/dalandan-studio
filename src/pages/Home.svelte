@@ -31,6 +31,19 @@
     gap: 5rem;
   }
 
+  @media (min-width: 769px) {
+    .circles-container {
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .circle {
+      flex-shrink: 0;
+      width: 80px;
+      height: 80px;
+    }
+  }
+
   .circle {
     width: 260px;
     height: 260px;
@@ -52,21 +65,21 @@
 
   @media (max-width: 768px) {
     .circles-container {
-      width: 70%;
-      margin: 0 auto;
+      width: 90%;
+      gap: 2rem;
     }
 
     .circle {
-      width: 35vw;
-      height: 35vw;
-      max-width: 200px;
-      max-height: 200px;
+      width: 45vw;
+      height: 45vw;
+      max-width: 250px;
+      max-height: 250px;
     }
 
     .circle-row {
       display: flex;
       flex-direction: column;
-      gap: 5rem;
+      gap: 2rem;
     }
   }
 </style>
