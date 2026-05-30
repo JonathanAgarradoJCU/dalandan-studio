@@ -28,12 +28,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 5rem;
   }
 
   .circle {
-    width: 120px;
-    height: 120px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
     background-color: rgba(233, 185, 112, 0.9);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
@@ -47,17 +47,26 @@
 
   .circle-row {
     display: flex;
-    gap: 3rem;
+    gap: 8rem;
   }
 
   @media (max-width: 768px) {
+    .circles-container {
+      width: 70%;
+      margin: 0 auto;
+    }
+
     .circle {
-      width: 80px;
-      height: 80px;
+      width: 35vw;
+      height: 35vw;
+      max-width: 200px;
+      max-height: 200px;
     }
 
     .circle-row {
-      gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
     }
   }
 </style>

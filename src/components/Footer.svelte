@@ -25,4 +25,10 @@
     background-color: transparent;
     z-index: 10;
   }
+
+  @media (max-width: 768px) {
+    .footer {
+      position: relative;
+    }
+  }
 </style>
