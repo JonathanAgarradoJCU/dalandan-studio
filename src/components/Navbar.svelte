@@ -119,7 +119,7 @@
       text-align: center;
       transform: translateY(-150%);
       transition: transform 0.4s ease-in-out;
-      z-index: 90;
+      z-index: 50;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     }
 
