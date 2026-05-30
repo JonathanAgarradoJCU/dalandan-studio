@@ -46,7 +46,7 @@
     pointer-events: none;
     display: flex;
     justify-content: center;
-    opacity: 0.85;
+    opacity: 0.75;
   }
 
   .lane {
@@ -65,11 +65,11 @@
   }
 
   .lane-down {
-    animation: slide-down 10s linear infinite;
+    animation: slide-down 8.5s alternate infinite;
   }
 
   .lane-up {
-    animation: slide-up 10s linear infinite;
+    animation: slide-up 8.5s alternate infinite;
   }
 
   @keyframes slide-down {
