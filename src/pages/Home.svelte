@@ -14,11 +14,18 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    position: relative;
+    z-index: 10;
   }
 
   .main-content h1 {
     font-size: 2.5rem;
     font-family: Arial, sans-serif;
     font-style: italic;
+    opacity: 1;
+    color: black;
+    padding: 1rem;
+    position: relative;
+    z-index: 20;
   }
 </style>

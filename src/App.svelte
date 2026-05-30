@@ -6,6 +6,7 @@
   import Home from './pages/Home.svelte';
   import ContactMe from './pages/ContactMe.svelte';
   import AboutMe from './pages/AboutMe.svelte';
+  import crumpledPaper from './assets/crumpled_paper.png';
 
   const routes = {
     '/': Home,
@@ -15,8 +16,23 @@
 </script>
 
 <Navbar />
+<img src={crumpledPaper} alt="" class="crumpled-texture" />
 <SlidingBackground />
 
 <Router {routes} />
 
 <Footer />
+
+<style>
+  .crumpled-texture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    opacity: 0.45;
+    z-index: 0.5;
+    pointer-events: none;
+  }
+</style>

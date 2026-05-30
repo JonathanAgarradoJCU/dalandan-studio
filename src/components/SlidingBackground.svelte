@@ -42,10 +42,10 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    z-index: 1;
+    z-index: -1;
     pointer-events: none;
     display: flex;
-    opacity: 0.3;
+    opacity: 0.9;
   }
 
   .lane {
