@@ -60,7 +60,6 @@
     top: 0;
     z-index: 1000;
     flex-shrink: 0;
-    clip-path: inset(0 0 -100% 0);
   }
 
   .navbar {
@@ -71,7 +70,7 @@
     align-items: center;
     padding: 1rem 2rem;
     position: relative;
-    z-index: 2;
+    z-index: 101;
   }
 
   .nav-logo a {
@@ -119,8 +118,10 @@
     flex-direction: column;
     list-style: none;
     gap: 1.5rem;
-    position: relative;
-    z-index: 1;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
     width: 100%;
     background-color: var(--color-nav-dropdown);
     padding: 2rem 0;
