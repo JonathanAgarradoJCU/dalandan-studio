@@ -120,6 +120,7 @@
     flex-direction: column;
     list-style: none;
     gap: 1.5rem;
+    position: relative;
     width: 100%;
     background-color: var(--color-nav-dropdown);
     padding: 2rem 0;
