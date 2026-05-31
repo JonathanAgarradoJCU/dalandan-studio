@@ -125,6 +125,7 @@
 </script>
 
 <div class="chart-container">
+  <p class="chart-title">This website was coded in...</p>
   {#if loading}
     <p class="loading-text">Loading repository languages...</p>
   {:else if error}
@@ -148,6 +149,19 @@
     justify-content: center;
     background-color: rgba(233, 185, 112, 0.1);
     border-radius: 1rem;
+  }
+
+  .chart-title {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  @media (max-width: 870px) {
+    .chart-title {
+      font-size: 1.2rem;
+    }
   }
 
   .chart-canvas {
