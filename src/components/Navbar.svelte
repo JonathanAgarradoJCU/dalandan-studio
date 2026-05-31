@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
   import { circlesMode, circlesAnimating } from '../stores/circlesStore.js';
+  import logoPng from '../assets/logos/dalandan-transparent-cropped.png';
 
   let menuOpen = $state(false);
   let clickedLink = $state('');
@@ -102,7 +103,7 @@
   <nav class="navbar">
     <div class="nav-logo-container">
       <a href="#/" class="logo-link" aria-label="DalanDan Studio">
-        <img src="/src/assets/logos/dalandan-transparent-cropped.png" alt="DalanDan Studio Logo" class="logo-image" />
+        <img src={logoPng} alt="DalanDan Studio Logo" class="logo-image" />
       </a>
       <div class="nav-logo">
         <a href="#/">DalanDan Studio</a>
@@ -143,9 +144,11 @@
 
   <ul class="menu-links" class:active={menuOpen}>
     <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={closeMenu}>Home</a></li>
-    <li class="circle-menu-link menu-link-red"><a href="#/art" class:clicked={clickedLink === '#/art'} onclick={closeMenu}>Art</a></li>
-    <li class="circle-menu-link menu-link-green"><a href="#/music" class:clicked={clickedLink === '#/music'} onclick={closeMenu}>Music</a></li>
-    <li class="circle-menu-link menu-link-blue"><a href="#/it-portfolio" class:clicked={clickedLink === '#/it-portfolio'} onclick={closeMenu}>IT Portfolio</a></li>
+    {#if clickedLink !== '#/' && clickedLink !== ''}
+      <li class="circle-menu-link menu-link-red"><a href="#/art" class:clicked={clickedLink === '#/art'} onclick={closeMenu}>Art</a></li>
+      <li class="circle-menu-link menu-link-green"><a href="#/music" class:clicked={clickedLink === '#/music'} onclick={closeMenu}>Music</a></li>
+      <li class="circle-menu-link menu-link-blue"><a href="#/it-portfolio" class:clicked={clickedLink === '#/it-portfolio'} onclick={closeMenu}>IT Portfolio</a></li>
+    {/if}
     <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu}>About Me</a></li>
     <li>
       <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={closeMenu}>Contact Me</a>
@@ -287,11 +290,43 @@
     text-shadow: none;
   }
 
-  .desktop-links a.clicked,
-  .menu-links a.clicked {
+  .desktop-links a.clicked {
     background-color: var(--color-hover);
     color: #000000;
     text-shadow: none;
+  }
+
+  .menu-links a.clicked {
+    background-color: #ffffff !important;
+    color: #000000;
+    text-shadow: none;
+    margin-right: -1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .circle-menu-link:has(a.clicked) {
+    background-color: #ffffff !important;
+    margin-right: -1rem;
+    padding-right: 1rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .circle-menu-link:has(a.clicked) a {
+    color: #000000;
+    text-shadow: none;
+  }
+
+  .menu-link-red:has(a.clicked) a {
+    color: #ff0000;
+  }
+
+  .menu-link-green:has(a.clicked) a {
+    color: #00ff00;
+  }
+
+  .menu-link-blue:has(a.clicked) a {
+    color: #0000ff;
   }
 
   /* Menu toggle button */
@@ -380,6 +415,10 @@
 
     .mobile-circles {
       display: flex;
+    }
+
+    .circle-menu-link a {
+      font-weight: bold;
     }
 
     .nav-circle {
