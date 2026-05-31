@@ -13,7 +13,7 @@
     max-width: var(--content-max-width);
     margin: 0 auto;
     width: 100%;
-    flex: 1;
+    height: calc(100vh - var(--nav-height));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,6 +64,10 @@
   }
 
   @media (min-width: 457px) and (max-width: 768px) {
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+
     .circles-container {
       width: 90%;
       height: 100%;
@@ -84,6 +88,10 @@
   }
 
   @media (max-width: 456px) {
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+
     .circles-container {
       width: 80%;
       height: 65%;
