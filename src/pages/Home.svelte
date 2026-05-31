@@ -54,8 +54,8 @@
     }
 
     .circle {
-      width: 15vw;
-      height: 15vw;
+      width: min(15vw, 22vh);
+      height: min(15vw, 22vh);
     }
   }
 
@@ -70,8 +70,8 @@
     }
 
     .circle {
-      width: 45vw;
-      height: 45vw;
+      width: min(45vw, 28vh);
+      height: min(45vw, 28vh);
       max-width: 250px;
       max-height: 250px;
     }
