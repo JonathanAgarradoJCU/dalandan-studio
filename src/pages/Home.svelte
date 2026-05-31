@@ -13,7 +13,7 @@
     max-width: var(--content-max-width);
     margin: 0 auto;
     width: 100%;
-    height: calc(100vh - var(--nav-height));
+    min-height: calc(100vh - var(--nav-height));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,7 +65,7 @@
 
   @media (min-width: 457px) and (max-width: 768px) {
     .main-content {
-      height: calc(100vh - 60px);
+      min-height: calc(100vh - 60px);
     }
 
     .circles-container {
@@ -76,10 +76,10 @@
     }
 
     .circle {
-      width: min(38vw, 28vh);
-      height: min(38vw, 28vh);
-      max-width: 220px;
-      max-height: 220px;
+      width: min(35vw, 28vh);
+      height: min(35vw, 28vh);
+      max-width: 200px;
+      max-height: 200px;
     }
 
     .circle-row {
@@ -89,27 +89,27 @@
 
   @media (max-width: 456px) {
     .main-content {
-      height: calc(100vh - 60px);
+      min-height: calc(100vh - 60px);
+      align-items: flex-start;
+      padding-top: var(--nav-height);
     }
 
     .circles-container {
       width: 80%;
-      height: 65%;
-      justify-content: center;
-      gap: 2rem;
+      justify-content: flex-start;
+      gap: 1.5rem;
     }
 
     .circle {
-      width: calc((0.65 * (100vh - 60px) - 4rem) / 3);
-      height: calc((0.65 * (100vh - 60px) - 4rem) / 3);
-      max-width: clamp(90px, calc(50px + 25vw), 180px);
-      max-height: clamp(90px, calc(50px + 25vw), 180px);
+      width: clamp(150px, 52vw, 220px);
+      height: clamp(150px, 52vw, 220px);
+      flex-shrink: 0;
     }
 
     .circle-row {
       flex-direction: column;
       align-items: center;
-      gap: 2rem;
+      gap: 1.5rem;
     }
   }
 </style>
