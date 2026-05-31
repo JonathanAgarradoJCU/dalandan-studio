@@ -72,6 +72,7 @@
       width: 90%;
       height: 85%;
       justify-content: space-evenly;
+      gap: 0;
     }
 
     .circle {
@@ -82,7 +83,7 @@
     }
 
     .circle-row {
-      gap: 5rem;
+      gap: 0;
     }
   }
 
@@ -95,6 +96,7 @@
       width: 80%;
       height: 85%;
       justify-content: space-evenly;
+      gap: 0;
     }
 
     .circle {
@@ -106,7 +108,7 @@
 
     .circle-row {
       flex-direction: column;
-      gap: 1rem;
+      gap: 0;
     }
   }
 
@@ -119,6 +121,7 @@
       width: 90%;
       height: 85%;
       justify-content: space-evenly;
+      gap: 0;
     }
 
     .circle {
@@ -130,7 +133,7 @@
 
     .circle-row {
       flex-direction: column;
-      gap: 2rem;
+      gap: 0;
     }
   }
 </style>
