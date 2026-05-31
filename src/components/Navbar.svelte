@@ -189,14 +189,24 @@
   }
 
   .logo-image {
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
     cursor: pointer;
     transition: transform 0.2s ease;
+    image-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .logo-image:hover {
     transform: scale(1.1);
+  }
+
+  @media (min-width: 871px) {
+    .logo-image {
+      width: 80px;
+      height: 80px;
+    }
   }
 
   .nav-logo a {
