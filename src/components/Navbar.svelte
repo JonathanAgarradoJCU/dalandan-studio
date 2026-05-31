@@ -307,7 +307,7 @@
   }
 
   .nav-circle-green {
-    background-color: rgba(0, 255, 0, 0.5);
+    background-color: rgba(29, 185, 84, 0.5);
   }
 
   .nav-circle-blue {
@@ -370,7 +370,7 @@
   }
 
   .menu-link-green:has(a.clicked) a {
-    color: #00ff00;
+    color: #1DB954;
   }
 
   .menu-link-blue:has(a.clicked) a {
@@ -445,7 +445,7 @@
   }
 
   .menu-link-green {
-    background-color: rgba(0, 255, 0, 0.5);
+    background-color: rgba(29, 185, 84, 0.5);
   }
 
   .menu-link-blue {

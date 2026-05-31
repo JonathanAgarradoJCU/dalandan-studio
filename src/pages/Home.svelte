@@ -98,7 +98,7 @@
   }
 
   .circle-green {
-    background-color: rgba(0, 255, 0, 0.5);
+    background-color: rgba(29, 185, 84, 0.5);
   }
 
   .circle-blue {
