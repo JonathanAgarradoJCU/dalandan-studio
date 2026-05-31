@@ -241,6 +241,18 @@
     opacity: 0;
   }
 
+  @media (min-width: 871px) {
+    .nav-circle {
+      width: 39px;
+      height: 39px;
+    }
+
+    .nav-circle.active {
+      width: 68.25px;
+      height: 68.25px;
+    }
+  }
+
   .nav-circle:hover {
     transform: scale(1.1);
   }
@@ -250,8 +262,8 @@
   }
 
   .nav-circle.active {
-    width: 48px;
-    height: 48px;
+    width: 52.5px;
+    height: 52.5px;
   }
 
   .nav-circle-red {
@@ -427,8 +439,8 @@
     }
 
     .nav-circle.active {
-      width: 62.4px;
-      height: 62.4px;
+      width: 68.25px;
+      height: 68.25px;
     }
 
     .menu-toggle {
@@ -460,8 +472,8 @@
     }
 
     .nav-circle.active {
-      width: 48px;
-      height: 48px;
+      width: 52.5px;
+      height: 52.5px;
     }
   }
 
