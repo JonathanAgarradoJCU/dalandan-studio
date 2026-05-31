@@ -91,20 +91,20 @@
     }
 
     .circles-container {
-      width: 90%;
-      gap: 1.5rem;
+      width: 80%;
+      gap: 1rem;
     }
 
     .circle {
-      width: min(35vw, 25vh);
-      height: min(35vw, 25vh);
-      max-width: 160px;
-      max-height: 160px;
+      width: min(25vw, 18vh);
+      height: min(25vw, 18vh);
+      max-width: 110px;
+      max-height: 110px;
     }
 
     .circle-row {
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
   }
 
