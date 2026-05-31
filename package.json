@@ -13,6 +13,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "chart.js": "^4.5.1",
     "svelte": "^5.55.10",
     "svelte-spa-router": "^5.1.0"
   },
