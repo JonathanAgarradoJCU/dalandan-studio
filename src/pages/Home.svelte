@@ -70,6 +70,8 @@
 
     .circles-container {
       width: 90%;
+      height: 100%;
+      justify-content: center;
       gap: 2rem;
     }
 
@@ -92,6 +94,8 @@
 
     .circles-container {
       width: 80%;
+      height: 100%;
+      justify-content: center;
       gap: 1rem;
     }
 
@@ -115,6 +119,8 @@
 
     .circles-container {
       width: 90%;
+      height: 100%;
+      justify-content: center;
       gap: 2rem;
     }
 
