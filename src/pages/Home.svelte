@@ -85,7 +85,7 @@
     }
   }
 
-  @media (min-width: 335px) and (max-width: 456px) {
+  @media (max-width: 456px) {
     .main-content {
       height: calc(100vh - 60px);
     }
@@ -105,27 +105,6 @@
     .circle-row {
       flex-direction: column;
       gap: 2rem;
-    }
-  }
-
-  @media (max-width: 334px) {
-    .main-content {
-      height: calc(100vh - 60px);
-    }
-
-    .circles-container {
-      width: 90%;
-      gap: 1.5rem;
-    }
-
-    .circle {
-      width: min(40vw, 25vh);
-      height: min(40vw, 25vh);
-    }
-
-    .circle-row {
-      flex-direction: column;
-      gap: 1.5rem;
     }
   }
 </style>
