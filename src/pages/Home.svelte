@@ -63,7 +63,29 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (min-width: 457px) and (max-width: 768px) {
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+
+    .circles-container {
+      width: 90%;
+      gap: 1.5rem;
+    }
+
+    .circle {
+      width: min(28vw, 22vh);
+      height: min(28vw, 22vh);
+      max-width: 180px;
+      max-height: 180px;
+    }
+
+    .circle-row {
+      gap: 4rem;
+    }
+  }
+
+  @media (max-width: 456px) {
     .main-content {
       height: calc(100vh - 60px);
     }
