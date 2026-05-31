@@ -118,22 +118,22 @@
     }
 
     .circles-container {
-      width: 90%;
+      width: 80%;
       height: 100%;
       justify-content: center;
-      gap: 2rem;
+      gap: 1rem;
     }
 
     .circle {
-      width: min(50vw, 32vh);
-      height: min(50vw, 32vh);
-      max-width: 280px;
-      max-height: 280px;
+      width: min(30vw, 20vh);
+      height: min(30vw, 20vh);
+      max-width: 120px;
+      max-height: 120px;
     }
 
     .circle-row {
       flex-direction: column;
-      gap: 2rem;
+      gap: 1rem;
     }
   }
 </style>
