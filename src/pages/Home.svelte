@@ -54,8 +54,12 @@
     }
 
     .circle {
-      width: min(19vw, 27vh);
-      height: min(19vw, 27vh);
+      width: min(24vw, 34vh);
+      height: min(24vw, 34vh);
+    }
+
+    .circle-row {
+      gap: 12rem;
     }
   }
 
