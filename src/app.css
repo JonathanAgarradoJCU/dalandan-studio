@@ -2,11 +2,11 @@
 :root {
   --color-primary: #e9b970;
   --color-primary-bg: rgba(233, 185, 112, 0.9);
-  --color-background: #ffecb8;
-  --color-text: #000000;
-  --color-text-muted: #565656;
+  --color-background: #182f4d;
+  --color-text: #ffffff;
+  --color-text-muted: #ffffff;
   --color-nav-dropdown: rgba(204, 170, 118, 0.84);
-  --color-hover: #ffffff;
+  --color-hover: #e9b970;
 
   --font-family-base: Arial, sans-serif;
   --line-height-base: 1.6;

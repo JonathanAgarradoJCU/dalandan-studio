@@ -8,8 +8,9 @@
     menuOpen = !menuOpen;
   }
 
-  function closeMenu() {
+  function closeMenu(event) {
     menuOpen = false;
+    event.currentTarget.blur();
   }
 
   function handleResize() {
@@ -63,7 +64,7 @@
   }
 
   .navbar {
-    background-color: var(--color-primary);
+    background-color: transparent;
     color: var(--color-text-muted);
     display: flex;
     justify-content: space-between;
@@ -91,12 +92,22 @@
     color: var(--color-text);
     text-decoration: none;
     font-size: 1.2rem;
-    font-weight: bold;
-    transition: color 0.3s;
+    font-weight: 400;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.5rem;
+    text-shadow: 0 0 0 transparent;
+    transition:
+      background-color 0.3s,
+      color 0.3s,
+      text-shadow 0.18s ease;
   }
 
   .desktop-links a:hover {
-    color: var(--color-hover);
+    background-color: var(--color-hover);
+    color: #000000;
+    text-shadow:
+      0.35px 0 0 currentColor,
+      -0.35px 0 0 currentColor;
   }
 
   /* Menu toggle button */
@@ -106,6 +117,7 @@
     border: none;
     color: var(--color-text);
     font-size: 1.8rem;
+    font-weight: 400;
     cursor: pointer;
     z-index: 110;
     width: 30px;
@@ -118,29 +130,38 @@
     flex-direction: column;
     list-style: none;
     gap: 1.5rem;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
+    top: var(--nav-height);
+    right: 0;
     z-index: 100;
-    width: 100%;
+    width: max-content;
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
+    margin: 0;
     background-color: var(--color-nav-dropdown);
-    padding: 2rem 0;
+    border-radius: 1rem 0 0 1rem;
+    padding: 1rem;
     text-align: center;
-    transform: translateY(-100%);
+    transform: translateX(100%);
     transition: transform 0.4s ease-in-out;
     box-shadow: var(--shadow-nav-dropdown);
   }
 
   .menu-links.active {
-    transform: translateY(0);
+    transform: translateX(0);
   }
 
   .menu-links a {
+    display: block;
     color: var(--color-text);
     text-decoration: none;
     font-size: 1.2rem;
-    font-weight: bold;
-    transition: color 0.3s;
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
   }
 
   .menu-links a:hover {
@@ -158,6 +179,12 @@
 
     .menu-links {
       display: flex;
+    }
+
+    .menu-links a:hover,
+    .menu-links a:active {
+      background-color: var(--color-hover);
+      color: #000000;
     }
   }
 </style>

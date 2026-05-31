@@ -33,7 +33,7 @@
     width: 100vw;
     height: 100vh;
     object-fit: cover;
-    opacity: 0.7;
+    opacity: 0.1;
     z-index: -2;
     pointer-events: none;
   }
