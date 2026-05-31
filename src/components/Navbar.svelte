@@ -24,6 +24,10 @@
     }
   }
 
+  function handleLogoError(event) {
+    event.currentTarget.src = '/src/assets/logos/dalandan-transparent-cropped.png';
+  }
+
   function toggleMenu() {
     menuOpen = !menuOpen;
   }
@@ -101,7 +105,9 @@
 <div class="nav-wrapper">
   <nav class="navbar">
     <div class="nav-logo-container">
-      <button class="logo-circle" onclick={() => window.location.hash = '#/'} aria-label="DalanDan Studio"></button>
+      <a href="#/" class="logo-link" aria-label="DalanDan Studio">
+        <img src="/src/assets/logos/dalandan-transparent-cropped.svg" alt="DalanDan Studio Logo" class="logo-image" onerror={handleLogoError} />
+      </a>
       <div class="nav-logo">
         <a href="#/">DalanDan Studio</a>
       </div>
@@ -176,18 +182,20 @@
     gap: 1rem;
   }
 
-  .logo-circle {
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-image {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    box-shadow: var(--shadow-card);
     cursor: pointer;
-    border: none;
     transition: transform 0.2s ease;
   }
 
-  .logo-circle:hover {
+  .logo-image:hover {
     transform: scale(1.1);
   }
 
