@@ -30,8 +30,8 @@
   }
 
   .circle {
-    width: 260px;
-    height: 260px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background-color: var(--color-primary-bg);
     box-shadow: var(--shadow-card);
@@ -54,30 +54,61 @@
     }
 
     .circle {
-      width: 15vw;
-      height: 15vw;
+      width: min(24vw, 34vh);
+      height: min(24vw, 34vh);
+    }
+
+    .circle-row {
+      gap: 12rem;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (min-width: 457px) and (max-width: 768px) {
     .main-content {
       height: calc(100vh - 60px);
     }
 
     .circles-container {
       width: 90%;
+      height: 100%;
+      justify-content: center;
       gap: 2rem;
     }
 
     .circle {
-      width: 45vw;
-      height: 45vw;
-      max-width: 250px;
-      max-height: 250px;
+      width: min(38vw, 28vh);
+      height: min(38vw, 28vh);
+      max-width: 220px;
+      max-height: 220px;
+    }
+
+    .circle-row {
+      gap: 5rem;
+    }
+  }
+
+  @media (max-width: 456px) {
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+
+    .circles-container {
+      width: 80%;
+      height: 65%;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .circle {
+      width: calc((0.65 * (100vh - 60px) - 4rem) / 3);
+      height: calc((0.65 * (100vh - 60px) - 4rem) / 3);
+      max-width: clamp(90px, calc(50px + 25vw), 180px);
+      max-height: clamp(90px, calc(50px + 25vw), 180px);
     }
 
     .circle-row {
       flex-direction: column;
+      align-items: center;
       gap: 2rem;
     }
   }
