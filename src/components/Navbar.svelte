@@ -35,15 +35,21 @@
     <a href="#/">DalanDan Studio</a>
   </div>
 
-  <ul class="nav-links" class:active={menuOpen}>
-    <li><a href="#/" onclick={closeMenu}>Home</a></li>
-    <li><a href="#/contact-me" onclick={closeMenu}>Contact Me</a></li>
-    <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
+  <ul class="desktop-links">
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/contact-me">Contact Me</a></li>
+    <li><a href="#/about-me">About Me</a></li>
   </ul>
 
   <button class="menu-toggle" aria-label="Toggle navigation" onclick={toggleMenu}>
     {menuOpen ? '✕' : '☰'}
   </button>
+
+  <ul class="menu-links" class:active={menuOpen}>
+    <li><a href="#/" onclick={closeMenu}>Home</a></li>
+    <li><a href="#/contact-me" onclick={closeMenu}>Contact Me</a></li>
+    <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
+  </ul>
 </nav>
 
 <style>
@@ -66,14 +72,14 @@
     font-weight: bold;
   }
 
-  .nav-links {
+  /* Desktop nav links */
+  .desktop-links {
     display: flex;
     list-style: none;
     gap: 1.5rem;
-    z-index: 90;
   }
 
-  .nav-links a {
+  .desktop-links a {
     color: var(--color-text);
     text-decoration: none;
     font-size: 1.2rem;
@@ -81,10 +87,11 @@
     transition: color 0.3s;
   }
 
-  .nav-links a:hover {
+  .desktop-links a:hover {
     color: var(--color-hover);
   }
 
+  /* Menu toggle button */
   .menu-toggle {
     display: none;
     background: none;
@@ -97,41 +104,52 @@
     text-align: center;
   }
 
+  /* Mobile menu links */
+  .menu-links {
+    display: none;
+    flex-direction: column;
+    list-style: none;
+    gap: 1.5rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-nav-dropdown);
+    padding: 2rem 0;
+    text-align: center;
+    transform: translateY(-150%);
+    transition: transform 0.4s ease-in-out;
+    z-index: -1;
+    box-shadow: var(--shadow-nav-dropdown);
+  }
+
+  .menu-links.active {
+    transform: translateY(0);
+  }
+
+  .menu-links a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .menu-links a:hover {
+    color: var(--color-hover);
+  }
+
   @media (max-width: 768px) {
+    .desktop-links {
+      display: none;
+    }
+
     .menu-toggle {
       display: block;
     }
 
-    .nav-links {
+    .menu-links {
       display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background-color: var(--color-nav-dropdown);
-      padding: 2rem 0;
-      text-align: center;
-      transform: translateY(-150%);
-      transition: transform 0.4s ease-in-out;
-      z-index: -1;
-      box-shadow: var(--shadow-nav-dropdown);
-    }
-
-    .nav-links.active {
-      transform: translateY(0);
-    }
-  }
-
-  @media (min-width: 769px) {
-    .nav-links {
-      transform: none !important;
-      position: static;
-      background-color: transparent;
-      padding: 0;
-      box-shadow: none;
-      z-index: auto;
     }
   }
 </style>
