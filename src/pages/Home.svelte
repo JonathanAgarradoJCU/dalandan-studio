@@ -30,8 +30,8 @@
   }
 
   .circle {
-    width: 260px;
-    height: 260px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     background-color: var(--color-primary-bg);
     box-shadow: var(--shadow-card);
@@ -54,8 +54,8 @@
     }
 
     .circle {
-      width: min(15vw, 22vh);
-      height: min(15vw, 22vh);
+      width: min(19vw, 27vh);
+      height: min(19vw, 27vh);
     }
   }
 
@@ -70,10 +70,10 @@
     }
 
     .circle {
-      width: min(45vw, 28vh);
-      height: min(45vw, 28vh);
-      max-width: 250px;
-      max-height: 250px;
+      width: min(50vw, 32vh);
+      height: min(50vw, 32vh);
+      max-width: 280px;
+      max-height: 280px;
     }
 
     .circle-row {
