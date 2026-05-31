@@ -70,8 +70,9 @@
 
     .circles-container {
       width: 90%;
-      height: 85%;
-      justify-content: space-evenly;
+      height: 100%;
+      justify-content: center;
+      gap: 2rem;
     }
 
     .circle {
@@ -93,15 +94,16 @@
 
     .circles-container {
       width: 80%;
-      height: 85%;
-      justify-content: space-evenly;
+      height: 100%;
+      justify-content: center;
+      gap: 1rem;
     }
 
     .circle {
-      width: min(30vw, 22vh);
-      height: min(30vw, 22vh);
-      max-width: 140px;
-      max-height: 140px;
+      width: min(25vw, 18vh);
+      height: min(25vw, 18vh);
+      max-width: 110px;
+      max-height: 110px;
     }
 
     .circle-row {
@@ -117,13 +119,14 @@
 
     .circles-container {
       width: 90%;
-      height: 85%;
-      justify-content: space-evenly;
+      height: 100%;
+      justify-content: center;
+      gap: 2rem;
     }
 
     .circle {
-      width: min(50vw, 25vh);
-      height: min(50vw, 25vh);
+      width: min(50vw, 32vh);
+      height: min(50vw, 32vh);
       max-width: 280px;
       max-height: 280px;
     }
