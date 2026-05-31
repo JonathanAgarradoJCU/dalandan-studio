@@ -112,13 +112,13 @@
 
     {#if mode === 'nav'}
       <div class="mobile-circles">
-        <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
+        <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} tabindex="-1" onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
           <span class="nav-circle-text">Art</span>
         </button>
-        <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
+        <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} tabindex="-1" onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
           <span class="nav-circle-text">Music</span>
         </button>
-        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
+        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} tabindex="-1" onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
           <span class="nav-circle-text">IT</span>
         </button>
       </div>
@@ -128,13 +128,13 @@
       <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
       {#if mode === 'nav'}
         <li class="nav-circles">
-          <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
+          <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
             <span class="nav-circle-text">Art</span>
           </button>
-          <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
+          <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
             <span class="nav-circle-text">Music</span>
           </button>
-          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
+          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
             <span class="nav-circle-text">IT</span>
           </button>
         </li>
@@ -155,15 +155,15 @@
   </nav>
 
   <ul class="menu-links" class:active={menuOpen}>
-    <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={closeMenu}>Home</a></li>
+    <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={closeMenu} tabindex="-1">Home</a></li>
     {#if clickedLink !== '#/' && clickedLink !== ''}
-      <li class="circle-menu-link menu-link-red"><a href="#/art" class:clicked={clickedLink === '#/art'} onclick={closeMenu}>Art</a></li>
-      <li class="circle-menu-link menu-link-green"><a href="#/music" class:clicked={clickedLink === '#/music'} onclick={closeMenu}>Music</a></li>
-      <li class="circle-menu-link menu-link-blue"><a href="#/it-portfolio" class:clicked={clickedLink === '#/it-portfolio'} onclick={closeMenu}>IT Portfolio</a></li>
+      <li class="circle-menu-link menu-link-red"><a href="#/art" class:clicked={clickedLink === '#/art'} onclick={closeMenu} tabindex="-1">Art</a></li>
+      <li class="circle-menu-link menu-link-green"><a href="#/music" class:clicked={clickedLink === '#/music'} onclick={closeMenu} tabindex="-1">Music</a></li>
+      <li class="circle-menu-link menu-link-blue"><a href="#/it-portfolio" class:clicked={clickedLink === '#/it-portfolio'} onclick={closeMenu} tabindex="-1">IT Portfolio</a></li>
     {/if}
-    <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu}>About Me</a></li>
+    <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu} tabindex="-1">About Me</a></li>
     <li>
-      <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={closeMenu}>Contact Me</a>
+      <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={closeMenu} tabindex="-1">Contact Me</a>
     </li>
   </ul>
 </div>

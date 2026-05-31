@@ -22,14 +22,14 @@
 
 <main class="main-content">
   <div class="circles-container" class:shrinking={isShrinking} class:visible={circlesVisible}>
-    <button class="circle circle-red" onclick={() => handleCircleClick('#/art')} aria-label="Art">
+    <button class="circle circle-red" inert={!circlesVisible} onclick={() => handleCircleClick('#/art')} aria-label="Art">
       <span class="circle-text">Art</span>
     </button>
     <div class="circle-row">
-      <button class="circle circle-green" onclick={() => handleCircleClick('#/music')} aria-label="Music">
+      <button class="circle circle-green" inert={!circlesVisible} onclick={() => handleCircleClick('#/music')} aria-label="Music">
         <span class="circle-text">Music</span>
       </button>
-      <button class="circle circle-blue" onclick={() => handleCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
+      <button class="circle circle-blue" inert={!circlesVisible} onclick={() => handleCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
         <span class="circle-text">IT Portfolio</span>
       </button>
     </div>

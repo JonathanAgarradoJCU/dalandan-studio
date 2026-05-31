@@ -26,6 +26,30 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-hover);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-hover);
+  outline-offset: 2px;
+}
+
+/* Disable focus styles on touch devices (no tab accessibility on mobile) */
+@media (hover: none) and (pointer: coarse) {
+  *:focus-visible {
+    outline: none;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: none;
+  }
+}
+
 body {
   font-family: var(--font-family-base);
   line-height: var(--line-height-base);
