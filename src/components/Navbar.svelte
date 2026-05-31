@@ -59,8 +59,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    overflow: clip;
-    overflow-clip-margin: content-box 0px;
+    flex-shrink: 0;
     clip-path: inset(0 0 -100% 0);
   }
 
@@ -121,13 +120,13 @@
     list-style: none;
     gap: 1.5rem;
     position: relative;
+    z-index: 1;
     width: 100%;
     background-color: var(--color-nav-dropdown);
     padding: 2rem 0;
     text-align: center;
     transform: translateY(-100%);
     transition: transform 0.4s ease-in-out;
-    z-index: 1;
     box-shadow: var(--shadow-nav-dropdown);
   }
 
