@@ -70,18 +70,18 @@
 
     .circles-container {
       width: 90%;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     .circle {
-      width: min(28vw, 22vh);
-      height: min(28vw, 22vh);
-      max-width: 180px;
-      max-height: 180px;
+      width: min(38vw, 28vh);
+      height: min(38vw, 28vh);
+      max-width: 220px;
+      max-height: 220px;
     }
 
     .circle-row {
-      gap: 4rem;
+      gap: 5rem;
     }
   }
 
