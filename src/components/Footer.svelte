@@ -14,9 +14,6 @@
 
 <style>
   .footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
     text-align: center;
     padding: 1rem;
@@ -24,11 +21,6 @@
     color: #565656;
     background-color: transparent;
     z-index: 10;
-  }
-
-  @media (max-width: 768px) {
-    .footer {
-      position: relative;
-    }
+    flex-shrink: 0;
   }
 </style>

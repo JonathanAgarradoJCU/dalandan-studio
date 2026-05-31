@@ -20,9 +20,3 @@ body {
   transition: none !important;
   animation: none !important;
 }
-
-@media (min-width: 769px) {
-  body {
-    overflow: hidden;
-  }
-}

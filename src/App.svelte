@@ -19,7 +19,9 @@
 <img src={crumpledPaper} alt="" class="crumpled-texture" />
 <SlidingBackground />
 
-<Router {routes} />
+<div class="router-container">
+  <Router {routes} />
+</div>
 
 <Footer />
 
@@ -34,5 +36,12 @@
     opacity: 0.7;
     z-index: -2;
     pointer-events: none;
+  }
+
+  .router-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
 </style>

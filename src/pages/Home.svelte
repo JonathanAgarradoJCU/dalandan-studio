@@ -7,15 +7,13 @@
     </div>
   </div>
 </main>
-
+ 
 <style>
   .main-content {
-    flex: 1;
-    padding: 3rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
-    min-height: calc(100vh - 60px - 60px);
+    height: calc(100vh - 70px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,27 +21,34 @@
     position: relative;
     z-index: 10;
   }
-
+ 
   .circles-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5rem;
   }
-
+ 
   @media (min-width: 769px) {
     .circles-container {
+      gap: 1rem;
+      margin: 0 auto;
+      width: 100%;
+      height: calc(100vh - 70px);
+      display: flex;
       justify-content: center;
-      gap: 2rem;
+      align-items: center;
+      text-align: center;
+      position: relative;
     }
-
+ 
     .circle {
       flex-shrink: 0;
-      width: 80px;
-      height: 80px;
+      width: 15vw;
+      height: 15vw;
     }
   }
-
+ 
   .circle {
     width: 260px;
     height: 260px;
@@ -53,29 +58,33 @@
     cursor: pointer;
     transition: transform 0.2s ease;
   }
-
+ 
   .circle:hover {
     transform: scale(1.05);
   }
-
+ 
   .circle-row {
     display: flex;
     gap: 8rem;
   }
-
+ 
   @media (max-width: 768px) {
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+ 
     .circles-container {
       width: 90%;
       gap: 2rem;
     }
-
+ 
     .circle {
       width: 45vw;
       height: 45vw;
       max-width: 250px;
       max-height: 250px;
     }
-
+ 
     .circle-row {
       display: flex;
       flex-direction: column;
