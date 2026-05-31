@@ -41,19 +41,15 @@
     <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
   </ul>
 
-  <button
-    class="menu-toggle"
-    aria-label="Toggle navigation"
-    onclick={toggleMenu}
-  >
+  <button class="menu-toggle" aria-label="Toggle navigation" onclick={toggleMenu}>
     {menuOpen ? '✕' : '☰'}
   </button>
 </nav>
 
 <style>
   .navbar {
-  background-color: #e9b970;
-    color: #ceb9b9;
+    background-color: var(--color-primary);
+    color: var(--color-text-muted);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,7 +60,7 @@
   }
 
   .nav-logo a {
-    color: #000000;
+    color: var(--color-text);
     text-decoration: none;
     font-size: 1.5rem;
     font-weight: bold;
@@ -78,7 +74,7 @@
   }
 
   .nav-links a {
-    color: #000000;
+    color: var(--color-text);
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: bold;
@@ -86,15 +82,14 @@
   }
 
   .nav-links a:hover {
-    color: #ffffff;
-    font-weight: bold;
+    color: var(--color-hover);
   }
 
   .menu-toggle {
     display: none;
     background: none;
     border: none;
-    color: #000000;
+    color: var(--color-text);
     font-size: 1.8rem;
     cursor: pointer;
     z-index: 110;
@@ -115,13 +110,13 @@
       top: 100%;
       left: 0;
       width: 100%;
-      background-color: #ccaa76d5;
+      background-color: var(--color-nav-dropdown);
       padding: 2rem 0;
       text-align: center;
       transform: translateY(-150%);
       transition: transform 0.4s ease-in-out;
       z-index: -1;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-nav-dropdown);
     }
 
     .nav-links.active {
