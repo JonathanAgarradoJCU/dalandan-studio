@@ -85,7 +85,30 @@
     }
   }
 
-  @media (max-width: 456px) {
+  @media (min-width: 348px) and (max-width: 456px) {
+    .main-content {
+      height: calc(100vh - 60px);
+    }
+
+    .circles-container {
+      width: 90%;
+      gap: 1.5rem;
+    }
+
+    .circle {
+      width: min(35vw, 25vh);
+      height: min(35vw, 25vh);
+      max-width: 160px;
+      max-height: 160px;
+    }
+
+    .circle-row {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 347px) {
     .main-content {
       height: calc(100vh - 60px);
     }
