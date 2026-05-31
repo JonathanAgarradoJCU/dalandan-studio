@@ -22,10 +22,16 @@
 
 <main class="main-content">
   <div class="circles-container" class:shrinking={isShrinking} class:visible={circlesVisible}>
-    <button class="circle circle-red" onclick={() => handleCircleClick('#/art')} aria-label="Art"></button>
+    <button class="circle circle-red" onclick={() => handleCircleClick('#/art')} aria-label="Art">
+      <span class="circle-text">Art</span>
+    </button>
     <div class="circle-row">
-      <button class="circle circle-green" onclick={() => handleCircleClick('#/music')} aria-label="Music"></button>
-      <button class="circle circle-blue" onclick={() => handleCircleClick('#/it-portfolio')} aria-label="IT Portfolio"></button>
+      <button class="circle circle-green" onclick={() => handleCircleClick('#/music')} aria-label="Music">
+        <span class="circle-text">Music</span>
+      </button>
+      <button class="circle circle-blue" onclick={() => handleCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
+        <span class="circle-text">IT Portfolio</span>
+      </button>
     </div>
   </div>
 </main>
@@ -71,6 +77,16 @@
     box-shadow: var(--shadow-card);
     cursor: pointer;
     transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .circle-text {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .circle:hover {
@@ -133,29 +149,66 @@
     }
   }
 
-  @media (max-width: 456px) {
+  @media (min-width: 333px) and (max-width: 456px) {
     .main-content {
       min-height: calc(100vh - 60px);
-      align-items: flex-start;
-      padding-top: var(--nav-height);
+      align-items: center;
+      padding-top: 0;
+      padding-bottom: 2rem;
     }
 
     .circles-container {
-      width: 80%;
-      justify-content: flex-start;
-      gap: 1.5rem;
+      width: 90%;
+      justify-content: center;
+      gap: 1rem;
+      max-height: none;
     }
 
     .circle {
-      width: clamp(150px, 52vw, 220px);
-      height: clamp(150px, 52vw, 220px);
+      width: clamp(100px, 35vw, 140px);
+      height: clamp(100px, 35vw, 140px);
       flex-shrink: 0;
     }
 
     .circle-row {
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
+    }
+
+    .circle-text {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 332px) {
+    .main-content {
+      min-height: calc(100vh - 60px);
+      align-items: center;
+      padding-top: 0;
+      padding-bottom: 2rem;
+    }
+
+    .circles-container {
+      width: 90%;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .circle {
+      width: clamp(90px, 30vw, 130px);
+      height: clamp(90px, 30vw, 130px);
+      flex-shrink: 0;
+    }
+
+    .circle-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .circle-text {
+      font-size: 0.9rem;
     }
   }
 </style>

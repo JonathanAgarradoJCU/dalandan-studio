@@ -112,9 +112,15 @@
 
     {#if mode === 'nav'}
       <div class="mobile-circles">
-        <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art"></button>
-        <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music"></button>
-        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio"></button>
+        <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
+          <span class="nav-circle-text">Art</span>
+        </button>
+        <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
+          <span class="nav-circle-text">Music</span>
+        </button>
+        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
+          <span class="nav-circle-text">IT</span>
+        </button>
       </div>
     {/if}
 
@@ -122,9 +128,15 @@
       <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
       {#if mode === 'nav'}
         <li class="nav-circles">
-          <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art"></button>
-          <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music"></button>
-          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio"></button>
+          <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
+            <span class="nav-circle-text">Art</span>
+          </button>
+          <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
+            <span class="nav-circle-text">Music</span>
+          </button>
+          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
+            <span class="nav-circle-text">IT</span>
+          </button>
         </li>
       {/if}
       <li>
@@ -239,17 +251,46 @@
     border: none;
     transition: transform 0.2s ease, opacity 0.35s ease, width 0.2s ease, height 0.2s ease;
     opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-circle-text {
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
   }
 
   @media (min-width: 871px) {
     .nav-circle {
-      width: 39px;
-      height: 39px;
+      width: 54.6px;
+      height: 54.6px;
+    }
+
+    .nav-circle-text {
+      font-size: 0.7rem;
     }
 
     .nav-circle.active {
-      width: 68.25px;
-      height: 68.25px;
+      width: 97.5px;
+      height: 97.5px;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    .nav-circle.active .nav-circle-text {
+      font-size: 0.85rem;
+    }
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
     }
   }
 
@@ -259,11 +300,6 @@
 
   .nav-circle.visible {
     opacity: 1;
-  }
-
-  .nav-circle.active {
-    width: 52.5px;
-    height: 52.5px;
   }
 
   .nav-circle-red {
@@ -434,13 +470,22 @@
     }
 
     .nav-circle {
-      width: 39px;
-      height: 39px;
+      width: 50.7px;
+      height: 50.7px;
+    }
+
+    .nav-circle-text {
+      font-size: 0.7rem;
     }
 
     .nav-circle.active {
       width: 68.25px;
       height: 68.25px;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    .nav-circle.active .nav-circle-text {
+      font-size: 0.85rem;
     }
 
     .menu-toggle {
@@ -471,13 +516,21 @@
       height: 30px;
     }
 
+    .nav-circle-text {
+      font-size: 0.6rem;
+    }
+
     .nav-circle.active {
       width: 52.5px;
       height: 52.5px;
     }
+
+    .nav-circle.active .nav-circle-text {
+      font-size: 0.75rem;
+    }
   }
 
-  @media (max-width: 370px) {
+  @media (max-width: 359px) {
     .mobile-circles {
       display: none;
     }
