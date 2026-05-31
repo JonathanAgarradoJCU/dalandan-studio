@@ -18,7 +18,7 @@
     text-align: center;
     padding: 1rem;
     font-size: 0.9rem;
-    color: #565656;
+    color: var(--color-text-muted);
     background-color: transparent;
     z-index: 10;
     flex-shrink: 0;

@@ -2,15 +2,16 @@
   import { onMount } from 'svelte';
   import crossPattern from '../assets/cross-pattern.png';
 
+  const TILE_SIZE = 150;
+  const GAP = 30;
+  const STEP = TILE_SIZE + GAP;
+
   let laneCount = $state(0);
   let tilesPerLane = $state(0);
-  const tileSize = 150;
-  const gap = 30;
-  const step = tileSize + gap;
 
   function recalc() {
-    laneCount = Math.ceil(window.innerWidth / tileSize) + 1;
-    tilesPerLane = Math.ceil((window.innerHeight + step) / step) + 1;
+    laneCount = Math.ceil(window.innerWidth / TILE_SIZE) + 1;
+    tilesPerLane = Math.ceil((window.innerHeight + STEP) / STEP) + 1;
   }
 
   onMount(() => {
@@ -20,14 +21,15 @@
   });
 </script>
 
-<div class="sliding-container">
-  {#each Array(laneCount) as _, i}
-    <div
-      class="lane"
-      class:lane-down={i % 2 === 0}
-      class:lane-up={i % 2 !== 0}
-    >
-      {#each Array(tilesPerLane) as _}
+<div
+  class="sliding-container"
+  style:--tile-size="{TILE_SIZE}px"
+  style:--tile-gap="{GAP}px"
+  style:--slide-offset="-{STEP}px"
+>
+  {#each Array(laneCount) as _lane, i (i)}
+    <div class="lane" class:lane-down={i % 2 === 0} class:lane-up={i % 2 !== 0}>
+      {#each Array(tilesPerLane) as _tile, j (j)}
         <img src={crossPattern} alt="" class="tile" />
       {/each}
     </div>
@@ -50,16 +52,16 @@
   }
 
   .lane {
-    width: 150px;
+    width: var(--tile-size);
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: var(--tile-gap);
   }
 
   .tile {
-    width: 150px;
-    height: 150px;
+    width: var(--tile-size);
+    height: var(--tile-size);
     display: block;
     flex-shrink: 0;
   }
@@ -74,7 +76,7 @@
 
   @keyframes slide-down {
     from {
-      transform: translateY(-180px);
+      transform: translateY(var(--slide-offset));
     }
     to {
       transform: translateY(0);
@@ -86,7 +88,7 @@
       transform: translateY(0);
     }
     to {
-      transform: translateY(-180px);
+      transform: translateY(var(--slide-offset));
     }
   }
 </style>
