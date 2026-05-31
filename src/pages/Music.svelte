@@ -1,12 +1,11 @@
 <script>
-  let iframe1Loaded = $state(false);
-  let iframe2Loaded = $state(false);
+  let iframeLoaded = $state(false);
 </script>
 
 <main class="main-content">
   <div class="spotify-embeds">
     <div class="embed-wrapper">
-      {#if !iframe1Loaded}
+      {#if !iframeLoaded}
         <div class="loading-dots">
           <div class="spinner">
             <span class="dot"></span>
@@ -21,42 +20,15 @@
       <iframe
         data-testid="embed-iframe"
         style="border-radius:12px"
-        src="https://open.spotify.com/embed/track/0lEySQ9mHBlX4rHZu7m4Mn?utm_source=generator"
+        src="https://open.spotify.com/embed/artist/4Vxw9rrGU0x853WoFBJngv?utm_source=generator"
         width="100%"
-        height="152"
+        height="352"
         frameBorder="0"
         allowfullscreen=""
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        title="Spotify track embed"
-        onload={() => iframe1Loaded = true}
-      ></iframe>
-    </div>
-    <div class="embed-wrapper">
-      {#if !iframe2Loaded}
-        <div class="loading-dots">
-          <div class="spinner">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-          </div>
-        </div>
-      {/if}
-      <iframe
-        data-testid="embed-iframe"
-        style="border-radius:12px"
-        src="https://open.spotify.com/embed/track/702FidTJTHN655G6mah1F9?utm_source=generator"
-        width="100%"
-        height="152"
-        frameBorder="0"
-        allowfullscreen=""
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="Spotify track embed"
-        onload={() => iframe2Loaded = true}
+        title="Spotify artist embed"
+        onload={() => iframeLoaded = true}
       ></iframe>
     </div>
   </div>
@@ -88,7 +60,7 @@
   .embed-wrapper {
     position: relative;
     width: 100%;
-    height: 152px;
+    height: 352px;
   }
 
   .loading-dots {
