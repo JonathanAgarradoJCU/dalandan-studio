@@ -102,8 +102,8 @@
     .circle {
       width: calc((0.65 * (100vh - 60px) - 4rem) / 3);
       height: calc((0.65 * (100vh - 60px) - 4rem) / 3);
-      max-width: 45vw;
-      max-height: 45vw;
+      max-width: clamp(90px, calc(50px + 25vw), 180px);
+      max-height: clamp(90px, calc(50px + 25vw), 180px);
     }
 
     .circle-row {
