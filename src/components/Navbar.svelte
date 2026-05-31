@@ -125,12 +125,14 @@
   .desktop-links a:hover {
     background-color: var(--color-hover);
     color: #000000;
+    text-shadow: none;
   }
 
   .desktop-links a.clicked,
   .menu-links a.clicked {
     background-color: var(--color-hover);
     color: #000000;
+    text-shadow: none;
   }
 
   /* Menu toggle button */
@@ -161,7 +163,7 @@
     max-width: calc(100vw - 2rem);
     box-sizing: border-box;
     margin: 0;
-    background-color: var(--color-nav-dropdown);
+    background-color: rgba(204, 170, 118, 0.15);
     border-radius: 1rem 0 0 1rem;
     padding: 1rem;
     text-align: center;
@@ -176,12 +178,13 @@
 
   .menu-links a {
     display: block;
-    color: var(--color-text);
+    color: #ffffff;
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 400;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
     transition:
       background-color 0.3s,
       color 0.3s;
@@ -208,6 +211,7 @@
     .menu-links a:active {
       background-color: var(--color-hover);
       color: #000000;
+      text-shadow: none;
     }
   }
 </style>

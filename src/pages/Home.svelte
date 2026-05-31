@@ -33,7 +33,7 @@
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background-color: var(--color-primary-bg);
+    background-color: #ffffff;
     box-shadow: var(--shadow-card);
     cursor: pointer;
     transition: transform 0.2s ease;

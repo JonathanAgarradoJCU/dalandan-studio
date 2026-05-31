@@ -28,6 +28,7 @@
   .content-bar {
     background-color: var(--color-primary-bg);
     color: #000000;
+    text-shadow: none;
     border-radius: var(--border-radius-card);
     padding: 0;
     box-shadow: var(--shadow-card);
