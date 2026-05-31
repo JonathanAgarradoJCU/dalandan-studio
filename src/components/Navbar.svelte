@@ -24,10 +24,6 @@
     }
   }
 
-  function handleLogoError(event) {
-    event.currentTarget.src = '/src/assets/logos/dalandan-transparent-cropped.png';
-  }
-
   function toggleMenu() {
     menuOpen = !menuOpen;
   }
@@ -106,7 +102,7 @@
   <nav class="navbar">
     <div class="nav-logo-container">
       <a href="#/" class="logo-link" aria-label="DalanDan Studio">
-        <img src="/src/assets/logos/dalandan-transparent-cropped.svg" alt="DalanDan Studio Logo" class="logo-image" onerror={handleLogoError} />
+        <img src="/src/assets/logos/dalandan-transparent-cropped.png" alt="DalanDan Studio Logo" class="logo-image" />
       </a>
       <div class="nav-logo">
         <a href="#/">DalanDan Studio</a>
