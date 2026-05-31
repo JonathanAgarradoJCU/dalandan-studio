@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
 
   let menuOpen = $state(false);
+  let clickedLink = $state('');
   let resizeTimer;
 
   function toggleMenu() {
@@ -9,8 +10,14 @@
   }
 
   function closeMenu(event) {
+    triggerClickEffect(event);
     menuOpen = false;
     event.currentTarget.blur();
+  }
+
+  function triggerClickEffect(event) {
+    const href = event.currentTarget.getAttribute('href');
+    clickedLink = href;
   }
 
   function handleResize() {
@@ -21,11 +28,18 @@
     }, 100);
   }
 
+  function syncActiveRoute() {
+    clickedLink = window.location.hash || '#/';
+  }
+
   onMount(() => {
+    syncActiveRoute();
+    window.addEventListener('hashchange', syncActiveRoute);
     window.addEventListener('resize', handleResize);
   });
 
   onDestroy(() => {
+    window.removeEventListener('hashchange', syncActiveRoute);
     window.removeEventListener('resize', handleResize);
     clearTimeout(resizeTimer);
   });
@@ -38,9 +52,15 @@
     </div>
 
     <ul class="desktop-links">
-      <li><a href="#/">Home</a></li>
-      <li><a href="#/contact-me">Contact Me</a></li>
-      <li><a href="#/about-me">About Me</a></li>
+      <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
+      <li>
+        <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={triggerClickEffect}>
+          Contact Me
+        </a>
+      </li>
+      <li>
+        <a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={triggerClickEffect}>About Me</a>
+      </li>
     </ul>
 
     <button class="menu-toggle" aria-label="Toggle navigation" onclick={toggleMenu}>
@@ -49,9 +69,11 @@
   </nav>
 
   <ul class="menu-links" class:active={menuOpen}>
-    <li><a href="#/" onclick={closeMenu}>Home</a></li>
-    <li><a href="#/contact-me" onclick={closeMenu}>Contact Me</a></li>
-    <li><a href="#/about-me" onclick={closeMenu}>About Me</a></li>
+    <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={closeMenu}>Home</a></li>
+    <li>
+      <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={closeMenu}>Contact Me</a>
+    </li>
+    <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu}>About Me</a></li>
   </ul>
 </div>
 
@@ -95,19 +117,20 @@
     font-weight: 400;
     padding: 0.25rem 0.6rem;
     border-radius: 0.5rem;
-    text-shadow: 0 0 0 transparent;
     transition:
       background-color 0.3s,
-      color 0.3s,
-      text-shadow 0.18s ease;
+      color 0.3s;
   }
 
   .desktop-links a:hover {
     background-color: var(--color-hover);
     color: #000000;
-    text-shadow:
-      0.35px 0 0 currentColor,
-      -0.35px 0 0 currentColor;
+  }
+
+  .desktop-links a.clicked,
+  .menu-links a.clicked {
+    background-color: var(--color-hover);
+    color: #000000;
   }
 
   /* Menu toggle button */

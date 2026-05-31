@@ -27,6 +27,7 @@
 
   .content-bar {
     background-color: var(--color-primary-bg);
+    color: #000000;
     border-radius: var(--border-radius-card);
     padding: 0;
     box-shadow: var(--shadow-card);
@@ -41,7 +42,6 @@
 
   .main-content p {
     font-size: 1.2rem;
-    color: var(--color-text-muted);
     padding: 0 1rem 0.5rem 1rem;
   }
 
