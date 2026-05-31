@@ -1,9 +1,31 @@
+<script>
+  import { circlesMode, circlesAnimating } from '../stores/circlesStore.js';
+  import { onMount } from 'svelte';
+  let isShrinking = $state(false);
+  let circlesVisible = $state(false);
+
+  function handleCircleClick(route) {
+    isShrinking = true;
+    circlesAnimating.set(true);
+    setTimeout(() => {
+      circlesMode.set('nav');
+      window.location.hash = route;
+    }, 350);
+  }
+
+  onMount(() => {
+    setTimeout(() => {
+      circlesVisible = true;
+    }, 100);
+  });
+</script>
+
 <main class="main-content">
-  <div class="circles-container">
-    <div class="circle"></div>
+  <div class="circles-container" class:shrinking={isShrinking} class:visible={circlesVisible}>
+    <button class="circle circle-red" onclick={() => handleCircleClick('#/art')} aria-label="Art"></button>
     <div class="circle-row">
-      <div class="circle"></div>
-      <div class="circle"></div>
+      <button class="circle circle-green" onclick={() => handleCircleClick('#/music')} aria-label="Music"></button>
+      <button class="circle circle-blue" onclick={() => handleCircleClick('#/it-portfolio')} aria-label="IT Portfolio"></button>
     </div>
   </div>
 </main>
@@ -27,6 +49,18 @@
     flex-direction: column;
     align-items: center;
     gap: 5rem;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease;
+    opacity: 0;
+  }
+
+  .circles-container.visible {
+    opacity: 1;
+  }
+
+  .circles-container.shrinking {
+    transform: scale(0.3);
+    opacity: 0;
+    transition: transform 0.35s ease-in-out, opacity 0.35s ease;
   }
 
   .circle {
@@ -41,6 +75,18 @@
 
   .circle:hover {
     transform: scale(1.05);
+  }
+
+  .circle-red {
+    background-color: rgba(255, 0, 0, 0.65);
+  }
+
+  .circle-green {
+    background-color: rgba(0, 255, 0, 0.65);
+  }
+
+  .circle-blue {
+    background-color: rgba(0, 0, 255, 0.65);
   }
 
   .circle-row {
@@ -63,7 +109,7 @@
     }
   }
 
-  @media (min-width: 457px) and (max-width: 768px) {
+  @media (min-width: 457px) and (max-width: 870px) {
     .main-content {
       min-height: calc(100vh - 60px);
     }

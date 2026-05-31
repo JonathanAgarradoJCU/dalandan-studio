@@ -46,7 +46,7 @@
     padding: 0 1rem 0.5rem 1rem;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 870px) {
     .main-content h1 {
       font-size: 1.5rem;
       padding: 0.3rem 0.8rem;

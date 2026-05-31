@@ -1,9 +1,28 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
+  import { circlesMode, circlesAnimating } from '../stores/circlesStore.js';
 
   let menuOpen = $state(false);
   let clickedLink = $state('');
   let resizeTimer;
+  let mode = $state('hero');
+  let circlesVisible = $state(false);
+  let isAnimating = $state(false);
+
+  function handleNavCircleClick(route) {
+    if (route === '#/') {
+      // Going to home - fade out circles first
+      circlesVisible = false;
+      circlesAnimating.set(true);
+      setTimeout(() => {
+        circlesMode.set('hero');
+        window.location.hash = route;
+      }, 350);
+    } else {
+      // Going to another page - navigate immediately
+      window.location.hash = route;
+    }
+  }
 
   function toggleMenu() {
     menuOpen = !menuOpen;
@@ -30,12 +49,46 @@
 
   function syncActiveRoute() {
     clickedLink = window.location.hash || '#/';
+    if (clickedLink === '#/' || clickedLink === '') {
+      circlesMode.set('hero');
+      circlesAnimating.set(false);
+    } else if (clickedLink === '#/art' || clickedLink === '#/music' || clickedLink === '#/it-portfolio' || clickedLink === '#/about-me' || clickedLink === '#/contact-me') {
+      circlesMode.set('nav');
+      circlesAnimating.set(false);
+    } else {
+      circlesMode.set('hero');
+      circlesAnimating.set(false);
+    }
   }
 
   onMount(() => {
     syncActiveRoute();
     window.addEventListener('hashchange', syncActiveRoute);
     window.addEventListener('resize', handleResize);
+    
+    // Subscribe to circlesAnimating
+    const animatingUnsubscribe = circlesAnimating.subscribe(value => {
+      isAnimating = value;
+    });
+    
+    // Subscribe to circles mode
+    const unsubscribe = circlesMode.subscribe(value => {
+      mode = value;
+      if (value === 'nav') {
+        // Always fade in when entering nav mode
+        setTimeout(() => {
+          circlesVisible = true;
+          circlesAnimating.set(false);
+        }, 350);
+      } else {
+        circlesVisible = false;
+      }
+    });
+    
+    return () => {
+      unsubscribe();
+      animatingUnsubscribe();
+    };
   });
 
   onDestroy(() => {
@@ -47,19 +100,37 @@
 
 <div class="nav-wrapper">
   <nav class="navbar">
-    <div class="nav-logo">
-      <a href="#/">DalanDan Studio</a>
+    <div class="nav-logo-container">
+      <button class="logo-circle" onclick={() => window.location.hash = '#/'} aria-label="DalanDan Studio"></button>
+      <div class="nav-logo">
+        <a href="#/">DalanDan Studio</a>
+      </div>
     </div>
+
+    {#if mode === 'nav'}
+      <div class="mobile-circles">
+        <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art"></button>
+        <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music"></button>
+        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio"></button>
+      </div>
+    {/if}
 
     <ul class="desktop-links">
       <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
+      {#if mode === 'nav'}
+        <li class="nav-circles">
+          <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} onclick={() => handleNavCircleClick('#/art')} aria-label="Art"></button>
+          <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} onclick={() => handleNavCircleClick('#/music')} aria-label="Music"></button>
+          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio"></button>
+        </li>
+      {/if}
+      <li>
+        <a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={triggerClickEffect}>About Me</a>
+      </li>
       <li>
         <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={triggerClickEffect}>
           Contact Me
         </a>
-      </li>
-      <li>
-        <a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={triggerClickEffect}>About Me</a>
       </li>
     </ul>
 
@@ -70,10 +141,13 @@
 
   <ul class="menu-links" class:active={menuOpen}>
     <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={closeMenu}>Home</a></li>
+    <li class="circle-menu-link menu-link-red"><a href="#/art" class:clicked={clickedLink === '#/art'} onclick={closeMenu}>Art</a></li>
+    <li class="circle-menu-link menu-link-green"><a href="#/music" class:clicked={clickedLink === '#/music'} onclick={closeMenu}>Music</a></li>
+    <li class="circle-menu-link menu-link-blue"><a href="#/it-portfolio" class:clicked={clickedLink === '#/it-portfolio'} onclick={closeMenu}>IT Portfolio</a></li>
+    <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu}>About Me</a></li>
     <li>
       <a href="#/contact-me" class:clicked={clickedLink === '#/contact-me'} onclick={closeMenu}>Contact Me</a>
     </li>
-    <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu}>About Me</a></li>
   </ul>
 </div>
 
@@ -96,6 +170,27 @@
     z-index: 101;
   }
 
+  .nav-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+  }
+
+  .logo-circle:hover {
+    transform: scale(1.1);
+  }
+
   .nav-logo a {
     color: var(--color-text);
     text-decoration: none;
@@ -108,6 +203,56 @@
     display: flex;
     list-style: none;
     gap: 1.5rem;
+    align-items: center;
+  }
+
+  .nav-circles {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .nav-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease, opacity 0.35s ease, width 0.2s ease, height 0.2s ease;
+    opacity: 0;
+  }
+
+  .nav-circle:hover {
+    transform: scale(1.1);
+  }
+
+  .nav-circle.visible {
+    opacity: 1;
+  }
+
+  .nav-circle.active {
+    width: 48px;
+    height: 48px;
+  }
+
+  .nav-circle-red {
+    background-color: rgba(255, 0, 0, 0.65);
+  }
+
+  .nav-circle-green {
+    background-color: rgba(0, 255, 0, 0.65);
+  }
+
+  .nav-circle-blue {
+    background-color: rgba(0, 0, 255, 0.65);
+  }
+
+  .mobile-circles {
+    display: none;
+    gap: 0.5rem;
+    align-items: center;
   }
 
   .desktop-links a {
@@ -194,9 +339,43 @@
     color: var(--color-hover);
   }
 
-  @media (max-width: 768px) {
+  .circle-menu-link {
+    display: none;
+  }
+
+  .menu-link-red {
+    background-color: rgba(255, 0, 0, 0.65);
+  }
+
+  .menu-link-green {
+    background-color: rgba(0, 255, 0, 0.65);
+  }
+
+  .menu-link-blue {
+    background-color: rgba(0, 0, 255, 0.65);
+  }
+
+  @media (max-width: 870px) {
     .desktop-links {
       display: none;
+    }
+
+    .nav-circles {
+      display: none;
+    }
+
+    .mobile-circles {
+      display: flex;
+    }
+
+    .nav-circle {
+      width: 39px;
+      height: 39px;
+    }
+
+    .nav-circle.active {
+      width: 62.4px;
+      height: 62.4px;
     }
 
     .menu-toggle {
@@ -212,6 +391,41 @@
       background-color: var(--color-hover);
       color: #000000;
       text-shadow: none;
+    }
+  }
+
+  @media (max-width: 1089px) {
+    .nav-logo {
+      display: none;
+    }
+  }
+
+  @media (max-width: 515px) {
+    .nav-circle {
+      width: 30px;
+      height: 30px;
+    }
+
+    .nav-circle.active {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  @media (max-width: 370px) {
+    .mobile-circles {
+      display: none;
+    }
+
+    .circle-menu-link {
+      display: block;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .circle-menu-link a {
+      color: #ffffff;
+      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
     }
   }
 </style>

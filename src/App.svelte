@@ -6,12 +6,18 @@
   import Home from './pages/Home.svelte';
   import ContactMe from './pages/ContactMe.svelte';
   import AboutMe from './pages/AboutMe.svelte';
+  import Art from './pages/Art.svelte';
+  import Music from './pages/Music.svelte';
+  import ITPortfolio from './pages/ITPortfolio.svelte';
   import crumpledPaper from './assets/crumpled_paper.webp';
 
   const routes = {
     '/': Home,
     '/contact-me': ContactMe,
     '/about-me': AboutMe,
+    '/art': Art,
+    '/music': Music,
+    '/it-portfolio': ITPortfolio,
   };
 </script>
 
