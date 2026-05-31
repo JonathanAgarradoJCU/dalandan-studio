@@ -1,34 +1,13 @@
 <script>
   import { onMount } from 'svelte';
   import Chart from 'chart.js/auto';
+  import { githubLanguages } from '../stores/githubStore.js';
 
   let chartCanvas;
   let chart;
   let loading = $state(true);
   let error = $state(null);
   let languages = $state({});
-
-  // GitHub repository to fetch languages from
-  const owner = 'JonathanAgarradoJCU';
-  const repo = 'dalandan-studio';
-
-  async function fetchLanguages() {
-    try {
-      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/languages`);
-      
-      if (!response.ok) {
-        throw new Error(`GitHub API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      languages = data;
-      return data;
-    } catch (err) {
-      error = err.message;
-      console.error('Error fetching GitHub languages:', err);
-      return null;
-    }
-  }
 
   function renderChart(data) {
     if (!data || Object.keys(data).length === 0) {
@@ -64,7 +43,7 @@
     });
 
     // Rename JavaScript to JS in labels
-    const displayLabels = labels.map(label => 
+    const displayLabels = labels.map(label =>
       label === 'JavaScript' ? 'JS' : label
     );
 
@@ -116,15 +95,31 @@
     });
   }
 
-  onMount(async () => {
-    const data = await fetchLanguages();
-    loading = false;
+  onMount(() => {
+    // Use preloaded data from store
+    if ($githubLanguages.data) {
+      languages = $githubLanguages.data;
+      loading = false;
+      error = $githubLanguages.error;
 
-    if (data) {
-      // Use requestAnimationFrame to ensure DOM is fully updated
-      requestAnimationFrame(() => {
-        renderChart(data);
+      if ($githubLanguages.data) {
+        requestAnimationFrame(() => {
+          renderChart($githubLanguages.data);
+        });
+      }
+    } else {
+      // If store is still loading, subscribe to changes
+      const unsubscribe = githubLanguages.subscribe((value) => {
+        if (value.data) {
+          languages = value.data;
+          loading = false;
+          error = value.error;
+          requestAnimationFrame(() => {
+            renderChart(value.data);
+          });
+        }
       });
+      return unsubscribe;
     }
   });
 </script>
