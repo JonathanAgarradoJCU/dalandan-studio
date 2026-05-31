@@ -83,7 +83,7 @@
     }
 
     .circle-row {
-      gap: 0;
+      gap: 5rem;
     }
   }
 
@@ -108,7 +108,6 @@
 
     .circle-row {
       flex-direction: column;
-      gap: 0;
     }
   }
 
@@ -133,7 +132,6 @@
 
     .circle-row {
       flex-direction: column;
-      gap: 0;
     }
   }
 </style>
