@@ -125,10 +125,10 @@
     }
 
     .circle {
-      width: min(30vw, 20vh);
-      height: min(30vw, 20vh);
-      max-width: 120px;
-      max-height: 120px;
+      width: min(22vw, 16vh);
+      height: min(22vw, 16vh);
+      max-width: 90px;
+      max-height: 90px;
     }
 
     .circle-row {
