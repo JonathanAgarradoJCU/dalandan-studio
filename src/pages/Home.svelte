@@ -78,15 +78,15 @@
   }
 
   .circle-red {
-    background-color: rgba(255, 0, 0, 0.65);
+    background-color: rgba(255, 0, 0, 0.5);
   }
 
   .circle-green {
-    background-color: rgba(0, 255, 0, 0.65);
+    background-color: rgba(0, 255, 0, 0.5);
   }
 
   .circle-blue {
-    background-color: rgba(0, 0, 255, 0.65);
+    background-color: rgba(0, 0, 255, 0.5);
   }
 
   .circle-row {

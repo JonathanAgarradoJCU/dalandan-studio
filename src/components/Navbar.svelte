@@ -255,15 +255,15 @@
   }
 
   .nav-circle-red {
-    background-color: rgba(255, 0, 0, 0.65);
+    background-color: rgba(255, 0, 0, 0.5);
   }
 
   .nav-circle-green {
-    background-color: rgba(0, 255, 0, 0.65);
+    background-color: rgba(0, 255, 0, 0.5);
   }
 
   .nav-circle-blue {
-    background-color: rgba(0, 0, 255, 0.65);
+    background-color: rgba(0, 0, 255, 0.5);
   }
 
   .mobile-circles {
@@ -393,15 +393,15 @@
   }
 
   .menu-link-red {
-    background-color: rgba(255, 0, 0, 0.65);
+    background-color: rgba(255, 0, 0, 0.5);
   }
 
   .menu-link-green {
-    background-color: rgba(0, 255, 0, 0.65);
+    background-color: rgba(0, 255, 0, 0.5);
   }
 
   .menu-link-blue {
-    background-color: rgba(0, 0, 255, 0.65);
+    background-color: rgba(0, 0, 255, 0.5);
   }
 
   @media (max-width: 870px) {
