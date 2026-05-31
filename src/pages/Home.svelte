@@ -95,13 +95,13 @@
     .circles-container {
       width: 80%;
       height: 65%;
-      justify-content: space-evenly;
-      gap: 0;
+      justify-content: center;
+      gap: 2rem;
     }
 
     .circle {
-      width: calc((0.65 * (100vh - 60px) - 2rem) / 3);
-      height: calc((0.65 * (100vh - 60px) - 2rem) / 3);
+      width: calc((0.65 * (100vh - 60px) - 4rem) / 3);
+      height: calc((0.65 * (100vh - 60px) - 4rem) / 3);
       max-width: 45vw;
       max-height: 45vw;
     }
@@ -109,7 +109,7 @@
     .circle-row {
       flex-direction: column;
       align-items: center;
-      gap: 0;
+      gap: 2rem;
     }
   }
 </style>
