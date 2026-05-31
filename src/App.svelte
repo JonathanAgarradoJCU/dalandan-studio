@@ -6,7 +6,7 @@
   import Home from './pages/Home.svelte';
   import ContactMe from './pages/ContactMe.svelte';
   import AboutMe from './pages/AboutMe.svelte';
-  import crumpledPaper from './assets/crumpled_paper.png';
+  import crumpledPaper from './assets/crumpled_paper.webp';
 
   const routes = {
     '/': Home,
