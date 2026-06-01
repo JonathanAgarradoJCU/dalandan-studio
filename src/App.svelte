@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import Router from 'svelte-spa-router';
   import Navbar from './components/Navbar.svelte';
   import SlidingBackground from './components/SlidingBackground.svelte';
@@ -22,9 +22,11 @@
   };
 
   let scrollWrapper;
+  let currentHash = $state(window.location.hash || '#/');
 
   function updateBackgroundColor() {
     const hash = window.location.hash;
+    currentHash = hash || '#/';
     let color = '#182f4d';
     if (hash === '#/art') color = '#5c2a2a';
     else if (hash === '#/music') color = '#2a5c3a';
@@ -38,10 +40,12 @@
     }
   }
 
-  function syncScrollOffset() {
+  async function syncScrollOffset() {
+    await tick();
     const navWrapper = document.querySelector('.nav-wrapper');
     if (navWrapper && scrollWrapper) {
       const h = navWrapper.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--nav-height', `${h}px`);
       scrollWrapper.style.marginTop = `${h}px`;
       scrollWrapper.style.height = `calc(100vh - ${h}px)`;
     }
@@ -52,10 +56,12 @@
     syncScrollOffset();
     window.addEventListener('hashchange', updateBackgroundColor);
     window.addEventListener('hashchange', resetScroll);
+    window.addEventListener('hashchange', syncScrollOffset);
     window.addEventListener('resize', syncScrollOffset);
     return () => {
       window.removeEventListener('hashchange', updateBackgroundColor);
       window.removeEventListener('hashchange', resetScroll);
+      window.removeEventListener('hashchange', syncScrollOffset);
       window.removeEventListener('resize', syncScrollOffset);
     };
   });
@@ -65,7 +71,7 @@
 <img src={crumpledPaper} alt="" class="crumpled-texture" />
 <SlidingBackground />
 
-<div bind:this={scrollWrapper} class="page-scroll-wrapper">
+<div bind:this={scrollWrapper} class="page-scroll-wrapper" class:home-page={currentHash === '#/'}>
   <div class="router-container">
     <Router {routes} />
   </div>
@@ -95,10 +101,29 @@
     scroll-behavior: smooth;
   }
 
+  .page-scroll-wrapper.home-page {
+    overflow-y: hidden;
+  }
+
   .router-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+
+  .page-scroll-wrapper.home-page .router-container {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  @media (max-width: 1023px) {
+    .page-scroll-wrapper.home-page {
+      overflow-y: hidden;
+    }
+
+    .page-scroll-wrapper.home-page .router-container {
+      overflow: hidden;
+    }
   }
 </style>

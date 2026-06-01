@@ -41,7 +41,8 @@
     max-width: var(--content-max-width);
     margin: 0 auto;
     width: 100%;
-    min-height: calc(100vh - var(--nav-height));
+    height: 100%;
+    min-height: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,6 +58,7 @@
     gap: 5rem;
     transition: transform 0.4s ease-in-out, opacity 0.4s ease;
     opacity: 0;
+    max-height: 100%;
   }
 
   .circles-container.visible {
@@ -72,6 +74,8 @@
   .circle {
     width: 300px;
     height: 300px;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 auto;
     border-radius: 50%;
     background-color: #ffffff;
     box-shadow: var(--shadow-card);
@@ -110,24 +114,27 @@
     gap: 8rem;
   }
 
-  @media (min-width: 769px) {
+  @media (min-width: 1024px) {
     .circles-container {
-      gap: 1rem;
+      gap: clamp(0.5rem, 1.5vh, 1rem);
+      justify-content: center;
     }
 
     .circle {
-      width: min(24vw, 34vh);
-      height: min(24vw, 34vh);
+      --circle-size: min(24vw, calc((100dvh - var(--nav-height) - 6.8rem - clamp(0.5rem, 1.5vh, 1rem)) / 2));
+      width: var(--circle-size);
+      height: var(--circle-size);
     }
 
     .circle-row {
-      gap: 12rem;
+      gap: clamp(2rem, 6vw, 8rem);
     }
   }
 
-  @media (min-width: 457px) and (max-width: 870px) {
+  @media (min-width: 640px) and (max-width: 1023px) {
     .main-content {
-      min-height: calc(100vh - 60px);
+      height: 100%;
+      min-height: 0;
     }
 
     .circles-container {
@@ -149,12 +156,13 @@
     }
   }
 
-  @media (min-width: 333px) and (max-width: 456px) {
+  @media (min-width: 333px) and (max-width: 639px) {
     .main-content {
-      min-height: calc(100vh - 60px);
+      height: 100%;
+      min-height: 0;
       align-items: center;
       padding-top: 0;
-      padding-bottom: 2rem;
+      padding-bottom: 0;
     }
 
     .circles-container {
@@ -183,10 +191,11 @@
 
   @media (max-width: 332px) {
     .main-content {
-      min-height: calc(100vh - 60px);
+      height: 100%;
+      min-height: 0;
       align-items: center;
       padding-top: 0;
-      padding-bottom: 2rem;
+      padding-bottom: 0;
     }
 
     .circles-container {

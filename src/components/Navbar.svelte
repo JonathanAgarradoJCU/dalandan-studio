@@ -249,7 +249,7 @@
     transform: scale(1.1);
   }
 
-  @media (min-width: 871px) {
+  @media (min-width: 1024px) {
     .logo-image {
       width: 80px;
       height: 80px;
@@ -300,7 +300,7 @@
     white-space: nowrap;
   }
 
-  @media (min-width: 871px) {
+  @media (min-width: 1024px) {
     .nav-circles {
       gap: 1.75rem;
       padding-inline: 21.45px;
@@ -511,7 +511,7 @@
     background-color: rgba(0, 0, 255, 0.5);
   }
 
-  @media (max-width: 870px) {
+  @media (max-width: 1023px) {
     .desktop-links {
       display: none;
     }
@@ -522,6 +522,7 @@
 
     .mobile-circles {
       display: flex;
+      gap: 0.75rem;
     }
 
     .circle-menu-link a {
@@ -538,9 +539,8 @@
     }
 
     .nav-circle.active {
-      width: 68.25px;
-      height: 68.25px;
-      animation: bounce 1.5s ease-in-out infinite;
+      transform: scale(1.2);
+      animation: bounce-mobile 1.5s ease-in-out infinite;
     }
 
     .nav-circle.active .nav-circle-text {
@@ -652,29 +652,33 @@
     }
   }
 
-  @media (max-width: 1089px) {
+  @media (max-width: 1023px) {
     .nav-logo {
       display: none;
     }
   }
 
-  @media (max-width: 515px) {
+  @media (max-width: 639px) {
+    .mobile-circles {
+      gap: 0.55rem;
+    }
+
     .nav-circle {
-      width: 30px;
-      height: 30px;
+      width: 42px;
+      height: 42px;
     }
 
     .nav-circle-text {
-      font-size: 0.6rem;
+      font-size: 0.68rem;
     }
 
     .nav-circle.active {
-      width: 52.5px;
-      height: 52.5px;
+      transform: scale(1.15);
+      animation: bounce-phone 1.5s ease-in-out infinite;
     }
 
     .nav-circle.active .nav-circle-text {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
     }
   }
 
@@ -692,6 +696,24 @@
     .circle-menu-link a {
       color: #ffffff;
       text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  @keyframes bounce-mobile {
+    0%, 100% {
+      transform: scale(1.2) translateY(0);
+    }
+    50% {
+      transform: scale(1.2) translateY(-4px);
+    }
+  }
+
+  @keyframes bounce-phone {
+    0%, 100% {
+      transform: scale(1.15) translateY(0);
+    }
+    50% {
+      transform: scale(1.15) translateY(-4px);
     }
   }
 </style>

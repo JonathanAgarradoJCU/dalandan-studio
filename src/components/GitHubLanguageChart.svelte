@@ -158,7 +158,7 @@
     text-align: center;
   }
 
-  @media (max-width: 870px) {
+  @media (max-width: 1023px) {
     .chart-title {
       font-size: 1.2rem;
     }
