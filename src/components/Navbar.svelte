@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
-  import { circlesMode, circlesAnimating } from '../stores/circlesStore.js';
+  import { circlesMode, circlesAnimating, artActiveSection } from '../stores/circlesStore.js';
   import logoPng from '../assets/logos/dalandan-transparent-cropped.png';
 
   let menuOpen = $state(false);
@@ -9,6 +9,7 @@
   let mode = $state('hero');
   let circlesVisible = $state(false);
   let isAnimating = $state(false);
+  let artSectionsOpen = $state(false);
 
   function handleNavCircleClick(route) {
     if (route === '#/') {
@@ -27,6 +28,18 @@
 
   function toggleMenu() {
     menuOpen = !menuOpen;
+  }
+
+  function toggleArtSections() {
+    artSectionsOpen = !artSectionsOpen;
+  }
+
+  function scrollToArtSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      artSectionsOpen = false;
+    }
   }
 
   function closeMenu(event) {
@@ -154,6 +167,28 @@
     </button>
   </nav>
 
+  {#if clickedLink === '#/art'}
+    <div class="art-sections-bar">
+      <button class="sections-toggle" onclick={toggleArtSections} aria-expanded={artSectionsOpen} aria-controls="sections-dropdown">
+        <span>{$artActiveSection}</span>
+        <span class="toggle-icon" class:open={artSectionsOpen}>&#9662;</span>
+      </button>
+      <nav id="sections-dropdown" class="sections-dropdown" class:open={artSectionsOpen} aria-label="Art sections">
+        <button class="section-btn" onclick={() => scrollToArtSection('commissions')}>Commissions</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('tos')}>Terms of Service</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('gallery')}>Gallery</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test1')}>Test 1</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test2')}>Test 2</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test3')}>Test 3</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test4')}>Test 4</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test5')}>Test 5</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test6')}>Test 6</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test7')}>Test 7</button>
+        <button class="section-btn" onclick={() => scrollToArtSection('test8')}>Test 8</button>
+      </nav>
+    </div>
+  {/if}
+
   <ul class="menu-links" class:active={menuOpen}>
     <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={closeMenu} tabindex="-1">Home</a></li>
     {#if clickedLink !== '#/' && clickedLink !== ''}
@@ -170,10 +205,11 @@
 
 <style>
   .nav-wrapper {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
-    flex-shrink: 0;
   }
 
   .navbar {
@@ -436,6 +472,10 @@
     color: var(--color-hover);
   }
 
+  .art-sections-bar {
+    display: none;
+  }
+
   .circle-menu-link {
     display: none;
   }
@@ -501,6 +541,95 @@
       background-color: var(--color-hover);
       color: #000000;
       text-shadow: none;
+    }
+
+    .art-sections-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.25rem 1rem 0.5rem;
+      background-color: transparent;
+    }
+
+    .sections-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 280px;
+      background-color: rgba(233, 185, 112, 0.2);
+      border: none;
+      font-family: var(--font-family-base);
+      font-size: 1rem;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-card);
+      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .sections-toggle:hover {
+      background-color: rgba(233, 185, 112, 0.35);
+      color: #ffffff;
+    }
+
+    .toggle-icon {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      font-size: 0.8rem;
+    }
+
+    .toggle-icon.open {
+      transform: rotate(180deg);
+    }
+
+    .sections-dropdown {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
+      margin-top: 0;
+      padding: 0;
+      gap: 0;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .sections-dropdown.open {
+      max-height: 300px;
+      opacity: 1;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      gap: 0.35rem;
+      border-radius: var(--border-radius-card);
+      background-color: var(--color-background);
+      transition: background-color 0.6s ease;
+    }
+
+    .section-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-family-base);
+      font-size: 0.85rem;
+      color: var(--color-text);
+      text-align: center;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      transition: background-color 0.2s, color 0.2s;
+      text-shadow: inherit;
+      flex: 0 1 auto;
+    }
+
+    .section-btn:hover {
+      background-color: rgba(233, 185, 112, 0.2);
+      color: var(--color-hover);
     }
   }
 
