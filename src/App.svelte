@@ -28,10 +28,21 @@
     const hash = window.location.hash;
     currentHash = hash || '#/';
     let color = '#182f4d';
-    if (hash === '#/art') color = '#5c2a2a';
-    else if (hash === '#/music') color = '#2a5c3a';
-    else if (hash === '#/it-portfolio') color = '#2a2a5c';
+    let menuColor = '#050f1a';
+    if (hash === '#/art') {
+      color = '#5c2a2a';
+      menuColor = '#1a0d0d';
+    }
+    else if (hash === '#/music') {
+      color = '#2a5c3a';
+      menuColor = '#0d1a12';
+    }
+    else if (hash === '#/it-portfolio') {
+      color = '#2a2a5c';
+      menuColor = '#0d0d1a';
+    }
     document.documentElement.style.setProperty('--color-background', color);
+    document.documentElement.style.setProperty('--color-menu-links', menuColor);
   }
 
   function resetScroll() {

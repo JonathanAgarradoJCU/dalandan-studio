@@ -63,6 +63,8 @@
 
   function syncActiveRoute() {
     clickedLink = window.location.hash || '#/';
+    artSectionsOpen = false;
+    menuOpen = false;
     if (clickedLink === '#/' || clickedLink === '') {
       circlesMode.set('hero');
       circlesAnimating.set(false);
@@ -460,7 +462,7 @@
     max-width: calc(100vw - 2rem);
     box-sizing: border-box;
     margin: 0;
-    background-color: rgba(204, 170, 118, 0.15);
+    background-color: var(--color-menu-links);
     border-radius: 1rem 0 0 1rem;
     padding: 1rem;
     text-align: center;
@@ -563,6 +565,10 @@
     }
 
     .art-sections-bar {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -577,7 +583,8 @@
       gap: 0.5rem;
       width: 100%;
       max-width: 280px;
-      background-color: rgba(233, 185, 112, 0.2);
+      background-color: var(--color-menu-links);
+      filter: brightness(1.7);
       border: none;
       font-family: var(--font-family-base);
       font-size: 1rem;
@@ -592,6 +599,12 @@
     .sections-toggle:hover {
       background-color: rgba(233, 185, 112, 0.35);
       color: #ffffff;
+    }
+
+    .sections-toggle:active,
+    .sections-toggle:focus {
+      background-color: var(--color-menu-links);
+      outline: none;
     }
 
     .toggle-icon {
@@ -612,7 +625,7 @@
       max-height: 0;
       overflow: hidden;
       opacity: 0;
-      transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
+      transition: max-height 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
       margin-top: 0;
       padding: 0;
       gap: 0;
