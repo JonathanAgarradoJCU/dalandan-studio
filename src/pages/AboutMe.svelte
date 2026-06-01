@@ -5,7 +5,7 @@
 <main class="wiki-page">
   <article class="wiki-article">
     <h1 class="wiki-title">DalanDan</h1>
-    <p class="wiki-tagline">From Wikipedia, the free encyclopedia</p>
+    <p class="wiki-tagline">From Skibidipedia, the fake encyclopedia</p>
 
     <div class="wiki-content-wrapper">
       <aside class="wiki-infobox">
@@ -38,7 +38,7 @@
             </tr>
             <tr>
               <th scope="row">Website</th>
-              <td><a href="#/">www.dalandan-studio.com</a></td>
+              <td><a href="https://tigerdalandan.carrd.co">tigerdalandan.carrd.co</a></td>
             </tr>
           </tbody>
         </table>

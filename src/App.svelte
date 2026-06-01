@@ -23,6 +23,7 @@
 
   let scrollWrapper;
   let currentHash = $state(window.location.hash || '#/');
+  let navResizeObserver;
 
   function updateBackgroundColor() {
     const hash = window.location.hash;
@@ -65,11 +66,17 @@
   onMount(() => {
     updateBackgroundColor();
     syncScrollOffset();
+    const navWrapper = document.querySelector('.nav-wrapper');
+    if (navWrapper) {
+      navResizeObserver = new ResizeObserver(syncScrollOffset);
+      navResizeObserver.observe(navWrapper);
+    }
     window.addEventListener('hashchange', updateBackgroundColor);
     window.addEventListener('hashchange', resetScroll);
     window.addEventListener('hashchange', syncScrollOffset);
     window.addEventListener('resize', syncScrollOffset);
     return () => {
+      navResizeObserver?.disconnect();
       window.removeEventListener('hashchange', updateBackgroundColor);
       window.removeEventListener('hashchange', resetScroll);
       window.removeEventListener('hashchange', syncScrollOffset);
