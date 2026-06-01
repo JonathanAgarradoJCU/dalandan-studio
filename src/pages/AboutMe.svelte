@@ -1,5 +1,5 @@
 <script>
-  import logoPng from '../assets/logos/dalandan-transparent-cropped.png';
+  import profileImg from '../assets/DalanDan-by-Koul.jpg';
 </script>
 
 <main class="wiki-page">
@@ -11,7 +11,7 @@
       <aside class="wiki-infobox">
         <div class="infobox-header">DalanDan</div>
         <div class="infobox-image">
-          <img src={logoPng} alt="DalanDan Studio Logo" />
+          <img src={profileImg} alt="DalanDan Profile" />
           <span class="infobox-caption">That's me!</span>
         </div>
         <table class="infobox-table">
@@ -197,6 +197,7 @@
     display: block;
     margin: 0 auto;
     border-radius: 0.25rem;
+    transform: scaleX(-1);
   }
 
   .infobox-caption {
