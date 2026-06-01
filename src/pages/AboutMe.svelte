@@ -98,7 +98,7 @@
             Outside of creative and technical work, DalanDan is an avid runner who has completed two
             full marathons and regularly participates in half marathons and 10K races. He also
             maintains his piano skills, reads widely, and competes in <a href="https://www.chess.com/member/tigerdalandan" target="_blank" rel="noopener noreferrer">chess</a>.
-          </p>.
+          </p>
           <p>
             In his leisure time, he plays <i>Valorant</i>,
             <a href="https://tracker.gg/valorant/profile/riot/TigerDalanDanYT%23T1G3R/overview?platform=pc&playlist=competitive&season=ce2783e8-44fc-dd48-3da3-33b5ba6c4a22" target="_blank" rel="noopener noreferrer">where he has reached Diamond 2 at his peak</a>.
