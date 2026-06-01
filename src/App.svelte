@@ -32,6 +32,12 @@
     document.documentElement.style.setProperty('--color-background', color);
   }
 
+  function resetScroll() {
+    if (scrollWrapper) {
+      scrollWrapper.scrollTop = 0;
+    }
+  }
+
   function syncScrollOffset() {
     const navWrapper = document.querySelector('.nav-wrapper');
     if (navWrapper && scrollWrapper) {
@@ -45,9 +51,11 @@
     updateBackgroundColor();
     syncScrollOffset();
     window.addEventListener('hashchange', updateBackgroundColor);
+    window.addEventListener('hashchange', resetScroll);
     window.addEventListener('resize', syncScrollOffset);
     return () => {
       window.removeEventListener('hashchange', updateBackgroundColor);
+      window.removeEventListener('hashchange', resetScroll);
       window.removeEventListener('resize', syncScrollOffset);
     };
   });
