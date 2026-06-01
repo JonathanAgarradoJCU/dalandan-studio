@@ -139,7 +139,7 @@
     }
 
     .page-scroll-wrapper.art-page {
-      scroll-padding-top: calc(var(--nav-height) + 60px);
+      scroll-padding-top: calc(var(--nav-height) + 40px);
     }
   }
 </style>

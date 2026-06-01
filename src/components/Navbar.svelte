@@ -37,7 +37,20 @@
   function scrollToArtSection(id) {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const scrollContainer = document.querySelector('.page-scroll-wrapper');
+      const navWrapper = document.querySelector('.nav-wrapper');
+      if (scrollContainer && navWrapper) {
+        const navHeight = navWrapper.getBoundingClientRect().height;
+        const sectionsToggleHeight = window.innerWidth <= 1023 ? 40 : 0;
+        const offset = navHeight + sectionsToggleHeight;
+        const elPosition = el.offsetTop;
+        scrollContainer.scrollTo({
+          top: elPosition - offset,
+          behavior: 'smooth'
+        });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       artSectionsOpen = false;
     }
   }
