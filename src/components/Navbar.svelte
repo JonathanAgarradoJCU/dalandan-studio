@@ -140,7 +140,7 @@
     <ul class="desktop-links">
       <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
       {#if mode === 'nav'}
-        <li class="nav-circles">
+        <li class="nav-circles" class:art-active={clickedLink === '#/art'} class:it-active={clickedLink === '#/it-portfolio'}>
           <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
             <span class="nav-circle-text">Art</span>
           </button>
@@ -285,7 +285,7 @@
     box-shadow: var(--shadow-card);
     cursor: pointer;
     border: none;
-    transition: transform 0.2s ease, opacity 0.35s ease, width 0.2s ease, height 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.35s ease;
     opacity: 0;
     display: flex;
     align-items: center;
@@ -301,6 +301,26 @@
   }
 
   @media (min-width: 871px) {
+    .nav-circles {
+      gap: 1.75rem;
+      padding-inline: 21.45px;
+    }
+
+    .nav-circles.art-active,
+    .nav-circles.it-active {
+      gap: 0.5rem;
+    }
+
+    .nav-circles.art-active .nav-circle-red,
+    .nav-circles.it-active .nav-circle-green {
+      margin-right: 1.25rem;
+    }
+
+    .nav-circles.art-active .nav-circle-green,
+    .nav-circles.it-active .nav-circle-blue {
+      margin-left: 1.25rem;
+    }
+
     .nav-circle {
       width: 54.6px;
       height: 54.6px;
@@ -311,8 +331,7 @@
     }
 
     .nav-circle.active {
-      width: 97.5px;
-      height: 97.5px;
+      transform: scale(1.7857);
       animation: bounce 1.5s ease-in-out infinite;
     }
 
@@ -323,10 +342,10 @@
 
   @keyframes bounce {
     0%, 100% {
-      transform: translateY(0);
+      transform: scale(1.7857) translateY(0);
     }
     50% {
-      transform: translateY(-5px);
+      transform: scale(1.7857) translateY(-5px);
     }
   }
 

@@ -88,7 +88,7 @@
   .page-scroll-wrapper {
     margin-top: var(--nav-height);
     height: calc(100vh - var(--nav-height));
-    overflow-y: auto;
+    overflow-y: scroll;
     width: 100%;
     display: flex;
     flex-direction: column;
