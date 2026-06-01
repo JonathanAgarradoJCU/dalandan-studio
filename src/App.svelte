@@ -80,7 +80,9 @@
 
 <Navbar />
 <img src={crumpledPaper} alt="" class="crumpled-texture" />
-<SlidingBackground />
+{#if currentHash !== '#/about-me'}
+  <SlidingBackground />
+{/if}
 
 <div bind:this={scrollWrapper} class="page-scroll-wrapper" class:home-page={currentHash === '#/'} class:art-page={currentHash === '#/art'}>
   <div class="router-container">
