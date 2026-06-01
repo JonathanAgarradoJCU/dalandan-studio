@@ -33,7 +33,7 @@
     }
 
     function updateActiveSection() {
-      const threshold = getNavHeight() + 92;
+      const threshold = getNavHeight() + 144;
       let currentId = ids[0];
       for (const id of ids) {
         const el = document.getElementById(id);

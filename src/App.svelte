@@ -82,7 +82,7 @@
 <img src={crumpledPaper} alt="" class="crumpled-texture" />
 <SlidingBackground />
 
-<div bind:this={scrollWrapper} class="page-scroll-wrapper" class:home-page={currentHash === '#/'}>
+<div bind:this={scrollWrapper} class="page-scroll-wrapper" class:home-page={currentHash === '#/'} class:art-page={currentHash === '#/art'}>
   <div class="router-container">
     <Router {routes} />
   </div>
@@ -110,6 +110,7 @@
     display: flex;
     flex-direction: column;
     scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-height);
   }
 
   .page-scroll-wrapper.home-page {
@@ -135,6 +136,10 @@
 
     .page-scroll-wrapper.home-page .router-container {
       overflow: hidden;
+    }
+
+    .page-scroll-wrapper.art-page {
+      scroll-padding-top: calc(var(--nav-height) + 60px);
     }
   }
 </style>
