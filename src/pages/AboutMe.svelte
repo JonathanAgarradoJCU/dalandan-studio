@@ -46,14 +46,14 @@
 
       <div class="wiki-body">
         <p class="wiki-lead">
-          <b>DalanDan</b> is an artist, musician, and self-described computer geek whose work spans
+          <b>DalanDan</b> is an artist, musician, and self-described "computer geek" tiger whose work spans
           digital illustration, music production, and computer coding.
         </p>
 
         <section class="wiki-section">
           <h2>Early life</h2>
           <p>
-            A Filipino by nationality, DalanDan was raised in Singapore, where he developed a lasting
+            A Filipino by nationality, Dan was raised in Singapore, where he developed a lasting
             appreciation for diverse cultures and perspectives. He enjoys meeting people from around the
             world, exploring new places, and learning about their stories and traditions.
           </p>
@@ -63,7 +63,7 @@
           <h2>Career</h2>
           <h3>Art</h3>
           <p>
-            DalanDan's interest in digital art began during his teenage years, after trying out his
+            Dan's interest in digital art began during his teenage years, after trying out his
             sister's Wacom CTH-480 tablet. What started as a curiosity gradually grew into a lasting
             passion, though he still considers himself an aspiring artist working to improve his craft.
             In November 2025, he invested in an XP-Pen Artist 15.6 Pro v2, finally equipping himself
@@ -71,7 +71,7 @@
           </p>
           <h3>Music</h3>
           <p>
-            Music has been part of DalanDan's life since childhood. In 2008, at the age of seven, his
+            Music has been part of Dan's life since childhood. In 2008, at the age of seven, his
             parents enrolled him in piano lessons. Although he initially resisted the routine of
             practice, he eventually developed a deep appreciation for classical and Romantic piano
             music, as well as orchestral compositions. Among his favorite pieces are Debussy's
@@ -80,12 +80,12 @@
           <p>
             His interest later expanded into music production. After acquiring a laptop capable of
             running FL Studio, he began experimenting with electronic and experimental sounds. <a href="https://open.spotify.com/artist/4Vxw9rrGU0x853WoFBJngv?si=odM_sNGuTF25zAZt3pnRaQ" target="_blank" rel="noopener noreferrer">A handful
-            of his tracks were released on Spotify under the DalanDan name</a>.
+            of his tracks were released on Spotify under the <i>DalanDan</i> name</a>.
           </p>
           <h3>IT & Development</h3>
           <p>
             A longtime fascination with computers — particularly user interfaces and video games —
-            eventually led DalanDan into software development. He began coding around 2022, but his
+            eventually led Dan into software development. He began coding around 2022, but his
             dedication deepened in late May 2026 after discovering AI-assisted development tools such
             as Windsurf IDE, Devin, and Cascade. Building this website became a turning point that
             inspired him to commit more seriously to programming.
@@ -95,7 +95,7 @@
         <section class="wiki-section">
           <h2>Personal life</h2>
           <p>
-            Outside of creative and technical work, DalanDan is an avid runner who has completed two
+            Outside of creative and technical work, Dan is an avid runner who has completed two
             full marathons and regularly participates in half marathons and 10K races. He also
             maintains his piano skills, reads widely, and competes in <a href="https://www.chess.com/member/tigerdalandan" target="_blank" rel="noopener noreferrer">chess</a>.
           </p>
