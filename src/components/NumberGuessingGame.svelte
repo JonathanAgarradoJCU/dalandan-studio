@@ -12,6 +12,104 @@
   let mostRecentGuess = $state(null);
   let guessResult = $state(null);
   let hint = $state(null);
+  let audioContext;
+
+  function playCoinSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Coin slot metallic sound - lower pitch with quick decay
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.15);
+  }
+
+  function playLowSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Decreasing pitch for low guess
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.2);
+    
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.2);
+  }
+
+  function playHighSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Increasing pitch for high guess
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.2);
+    
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.2);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.2);
+  }
+
+  function playLoseSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Bomb blast - low frequency with quick decay
+    oscillator.type = 'sawtooth';
+    oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.4);
+    
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.4);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.4);
+  }
+
+  function playLeaveSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Leaving sound - descending tone
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
+    
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
+  }
 
   function getOrdinal(n) {
     const s = ['th', 'st', 'nd', 'rd'];
@@ -20,6 +118,16 @@
   }
 
   function startGame() {
+    // Initialize audio context on first interaction
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    // Resume audio context if suspended (browsers require user interaction)
+    if (audioContext && audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+    
+    playCoinSound();
     secretNumber = Math.floor(Math.random() * 500) + 1;
     maxAttempts = 10;
     message = 'New game started! Guess a number between 1 and 500.';
@@ -32,6 +140,15 @@
     guessResult = null;
     winningGuess = null;
     mostRecentGuess = null;
+  }
+
+  function endGame() {
+    playLeaveSound();
+    gameActive = false;
+    message = '';
+    hint = null;
+    guessResult = null;
+    guess = '';
   }
 
   function submitGuess() {
@@ -71,23 +188,26 @@
       hint = null;
     } else if (attempts >= maxAttempts) {
       guessResult = 'lost';
-      message = `Game over! The number was ${secretNumber}.`;
+      message = `Game over! The number was <span class="highlight-number">${secretNumber}</span>.`;
       hint = `Your final guess was ${guessNum < secretNumber ? 'low' : 'high'}!`;
       mostRecentGuess = guessNum;
       gameActive = false;
       guess = '';
+      playLoseSound();
     } else if (guessNum < secretNumber) {
       guessResult = 'too_low';
       message = 'Low! Try again.';
       hint = `Your ${getOrdinal(attempts)} guess was low!`;
       mostRecentGuess = guessNum;
       guess = '';
+      playLowSound();
     } else {
       guessResult = 'too_high';
       message = 'High! Try again.';
       hint = `Your ${getOrdinal(attempts)} guess was high!`;
       mostRecentGuess = guessNum;
       guess = '';
+      playHighSound();
     }
   }
 
@@ -107,7 +227,7 @@
   <div class="game-status">
     {#if gameActive || message}
       <div class="message {gameActive ? 'active' : 'inactive'} {guessResult === 'too_low' ? 'tooLow' : ''} {guessResult === 'too_high' ? 'tooHigh' : ''} {guessResult === 'lost' ? 'lost' : ''}">
-        {message}
+        {@html message}
         {#if hint}
           <div class="hint">{hint}</div>
         {/if}
@@ -158,6 +278,10 @@
   <div class="attempts">
     <p>Attempts: {attempts} / {maxAttempts}</p>
   </div>
+  
+  {#if gameActive}
+    <button class="end-game-btn" on:click={endGame}>End Game</button>
+  {/if}
 </div>
 
 <style>
@@ -170,6 +294,7 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     color: white;
     transition: background 0.3s ease;
+    position: relative;
   }
 
   .game-container.winner {
@@ -240,6 +365,18 @@
     margin-top: 0.5rem;
     font-size: 0.9rem;
     opacity: 0.9;
+  }
+
+  .highlight-number {
+    font-weight: bold;
+    color: #FFB74D;
+    text-shadow: 0 0 10px rgba(255, 183, 77, 0.5);
+  }
+
+  :global(.highlight-number) {
+    font-weight: bold;
+    color: #FFB74D;
+    text-shadow: 0 0 10px rgba(255, 183, 77, 0.5);
   }
 
   .message.lost {
@@ -382,5 +519,22 @@
     text-align: center;
     font-weight: 600;
     opacity: 0.9;
+  }
+
+  .end-game-btn {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 1rem 0 0 auto;
+  }
+
+  .end-game-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
 </style>

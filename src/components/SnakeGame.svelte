@@ -28,6 +28,7 @@
   let maxScore = maxPossibleScore;
   let audioContext;
   let moveCounter = 0;
+  let foodPulse = 0;
   
   onMount(() => {
     // Initialize audio context
@@ -118,16 +119,57 @@
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.destination);
     
-    // Randomize between two subtle pitches
-    const pitch = Math.random() > 0.5 ? 180 : 220;
+    // Hiss-like sound using sawtooth wave with 7 randomized pitches
+    oscillator.type = 'sawtooth';
+    const pitches = [150, 180, 220, 260, 300, 340, 380];
+    const pitch = pitches[Math.floor(Math.random() * pitches.length)];
     oscillator.frequency.setValueAtTime(pitch, audioContext.currentTime);
     
-    // Very quiet and subtle
-    gainNode.gain.setValueAtTime(0.02, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.03);
+    // Increased volume and duration for better audibility
+    gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
     
     oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.03);
+    oscillator.stop(audioContext.currentTime + 0.05);
+  }
+  
+  function playCoinSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Coin slot metallic sound - lower pitch with quick decay
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.15);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.15);
+  }
+
+  function playLeaveSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Leaving sound - descending tone
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(150, audioContext.currentTime + 0.3);
+    
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
   }
   
   function spawnFood() {
@@ -150,12 +192,21 @@
       audioContext.resume();
     }
     
+    playCoinSound();
     resetGame();
     gameStarted = true;
     gameOver = false;
     lastUpdateTime = 0;
     if (gameLoop) cancelAnimationFrame(gameLoop);
     gameLoop = requestAnimationFrame(gameLoopFn);
+  }
+
+  function endGame() {
+    playLeaveSound();
+    gameStarted = false;
+    gameOver = false;
+    if (gameLoop) cancelAnimationFrame(gameLoop);
+    resetGame();
   }
   
   function gameLoopFn(timestamp) {
@@ -165,6 +216,9 @@
       update();
       lastUpdateTime = timestamp;
     }
+    
+    // Update food pulse animation
+    foodPulse = (foodPulse + 0.06) % (Math.PI * 2);
     
     // Interpolate visual positions for smooth movement
     interpolate();
@@ -267,7 +321,7 @@
     } else {
       snake.pop();
       moveCounter++;
-      if (moveCounter >= 3) {
+      if (moveCounter >= 5) {
         playMoveSound();
         moveCounter = 0;
       }
@@ -295,17 +349,73 @@
     
     // Draw snake using interpolated positions
     visualSnake.forEach((segment, index) => {
-      ctx.fillStyle = index === 0 ? '#4CAF50' : '#81C784';
+      // Head is blue, body follows pattern: Orange, Macaroni, Orange, Blue repeating
+      if (index === 0) {
+        ctx.fillStyle = '#2196F3'; // Blue head
+      } else {
+        const patternIndex = (index - 1) % 4;
+        if (patternIndex === 0) {
+          ctx.fillStyle = '#FF9800'; // Orange
+        } else if (patternIndex === 1) {
+          ctx.fillStyle = '#FFE082'; // Macaroni (slight orange tint)
+        } else if (patternIndex === 2) {
+          ctx.fillStyle = '#FF9800'; // Orange
+        } else {
+          ctx.fillStyle = '#2196F3'; // Blue
+        }
+      }
       ctx.fillRect(
         segment.x * gridSize,
         segment.y * gridSize,
         gridSize,
         gridSize
       );
+      
+      // Draw outline on sides not connected to another segment
+      ctx.strokeStyle = index === 0 ? '#2196F3' : '#FF9800';
+      ctx.lineWidth = 1;
+      
+      // Check each direction for adjacent segments
+      const hasUp = snake.some(s => s.x === segment.x && s.y === segment.y - 1);
+      const hasDown = snake.some(s => s.x === segment.x && s.y === segment.y + 1);
+      const hasLeft = snake.some(s => s.x === segment.x - 1 && s.y === segment.y);
+      const hasRight = snake.some(s => s.x === segment.x + 1 && s.y === segment.y);
+      
+      const x = segment.x * gridSize;
+      const y = segment.y * gridSize;
+      
+      if (!hasUp) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + gridSize, y);
+        ctx.stroke();
+      }
+      if (!hasDown) {
+        ctx.beginPath();
+        ctx.moveTo(x, y + gridSize);
+        ctx.lineTo(x + gridSize, y + gridSize);
+        ctx.stroke();
+      }
+      if (!hasLeft) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x, y + gridSize);
+        ctx.stroke();
+      }
+      if (!hasRight) {
+        ctx.beginPath();
+        ctx.moveTo(x + gridSize, y);
+        ctx.lineTo(x + gridSize, y + gridSize);
+        ctx.stroke();
+      }
     });
     
-    // Draw food
-    ctx.fillStyle = '#FF5722';
+    // Draw food with pulsing color
+    const pulseValue = (Math.sin(foodPulse) + 1) / 2; // 0 to 1
+    const red = Math.floor(255 * (1 - pulseValue * 0.2)); // 255 to 204
+    const green = Math.floor(87 * (1 - pulseValue * 0.3)); // 87 to 61
+    const blue = Math.floor(34 * (1 - pulseValue * 0.3)); // 34 to 24
+    ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
     ctx.fillRect(
       food.x * gridSize,
       food.y * gridSize,
@@ -395,23 +505,25 @@
           <text x="49" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">→</text>
         </svg>
       </span>
-      or arrow buttons to control the snake. Eat food to grow!
+      or arrow buttons below to control the snake. Eat <span class="food-cube"></span> to grow!
     </p>
   </div>
   
   <div class="game-area">
-    <div class="score">Score: {score}/{maxScore}</div>
-    <canvas bind:this={canvas} class="game-canvas"></canvas>
-    
-    {#if !gameStarted}
-      <button class="start-btn" on:click={startGame}>Start Game</button>
-    {:else if gameOver}
-      <div class="game-over">
-        <p>Game Over!</p>
-        <p>Final Score: {score}</p>
-        <button class="restart-btn" on:click={startGame}>Play Again</button>
-      </div>
-    {/if}
+    <div class="score">Score: {score} / {maxScore}</div>
+    <div class="canvas-wrapper">
+      <canvas bind:this={canvas} class="game-canvas"></canvas>
+      {#if !gameStarted}
+        <button class="start-btn" on:click={startGame}>Start Game</button>
+      {/if}
+      {#if gameOver}
+        <div class="game-over">
+          <p>Game Over!</p>
+          <p>Final Score: {score}</p>
+          <button class="restart-btn" on:click={startGame}>Play Again</button>
+        </div>
+      {/if}
+    </div>
     
     <div class="arrow-buttons">
       <button class="arrow-btn up" on:click={() => handleDirection('up')}>↑</button>
@@ -420,6 +532,10 @@
       <button class="arrow-btn down" on:click={() => handleDirection('down')}>↓</button>
     </div>
   </div>
+  
+  {#if gameStarted}
+    <button class="end-game-btn" on:click={endGame}>End Game</button>
+  {/if}
 </div>
 
 <style>
@@ -432,6 +548,7 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     color: white;
     overflow: hidden;
+    position: relative;
   }
 
   h2 {
@@ -470,6 +587,17 @@
     vertical-align: middle;
   }
 
+  .food-cube {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #FF5722;
+    border: 1px solid #333;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin: 0 2px;
+  }
+
   .game-area {
     display: flex;
     flex-direction: column;
@@ -493,9 +621,29 @@
     height: 240px;
   }
 
+  .canvas-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .start-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .start-btn:hover {
+    transform: translate(-50%, -50%) translateY(-2px);
+  }
+
   .game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(27, 94, 32, 0.9);
     padding: 1rem;
     border-radius: 10px;
   }
@@ -537,9 +685,22 @@
     display: grid;
     grid-template-columns: 50px 50px 50px;
     grid-template-rows: 50px 50px;
-    gap: 2px;
+    gap: 4px;
     margin-top: 1rem;
     justify-content: center;
+  }
+
+  @media (max-width: 1023px) {
+    .arrow-buttons {
+      gap: 16px;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: 60px 60px;
+    }
+
+    .arrow-btn {
+      width: 60px;
+      height: 60px;
+    }
   }
 
   .arrow-btn {
@@ -574,6 +735,23 @@
   .arrow-btn.down {
     grid-column: 2;
     grid-row: 2;
+  }
+
+  .end-game-btn {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 1rem 0 0 auto;
+  }
+
+  .end-game-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
 
   .arrow-btn:hover {
