@@ -1,16 +1,23 @@
 <script>
   let secretNumber = null;
-  let guess = '';
-  let message = 'Click "Start Game" to begin!';
-  let attempts = 0;
-  let maxAttempts = 10;
-  let history = [];
-  let gameActive = false;
-  let loading = false;
-  let winningGuess = null;
-  let mostRecentGuess = null;
-  let guessResult = null;
-  let hint = null;
+  let guess = $state('');
+  let message = $state('Click "Start Game" to begin!');
+  let attempts = $state(0);
+  let maxAttempts = $state(10);
+  let history = $state([]); // Array of { number, wasLow }
+  let guessAttempts = new Map(); // Track which attempt each guess was made on
+  let gameActive = $state(false);
+  let loading = $state(false);
+  let winningGuess = $state(null);
+  let mostRecentGuess = $state(null);
+  let guessResult = $state(null);
+  let hint = $state(null);
+
+  function getOrdinal(n) {
+    const s = ['th', 'st', 'nd', 'rd'];
+    const v = n % 100;
+    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+  }
 
   function startGame() {
     secretNumber = Math.floor(Math.random() * 500) + 1;
@@ -18,6 +25,7 @@
     message = 'New game started! Guess a number between 1 and 500.';
     attempts = 0;
     history = [];
+    guessAttempts.clear();
     gameActive = true;
     guess = '';
     hint = null;
@@ -35,13 +43,14 @@
       return;
     }
     
-    if (history.includes(guessNum)) {
+    if (history.some(h => h.number === guessNum)) {
+      const attemptNum = guessAttempts.get(guessNum);
       if (guessNum < secretNumber) {
         guessResult = 'too_low';
-        hint = 'Too low!';
+        hint = `Your ${getOrdinal(attemptNum)} guess was low!`;
       } else {
         guessResult = 'too_high';
-        hint = 'Too high!';
+        hint = `Your ${getOrdinal(attemptNum)} guess was high!`;
       }
       message = "You've already picked this number. Pick another one.";
       guess = '';
@@ -49,29 +58,34 @@
     }
     
     attempts++;
-    history.push(guessNum);
+    history.push({ number: guessNum, wasLow: guessNum < secretNumber });
+    guessAttempts.set(guessNum, attempts);
     
     if (guessNum === secretNumber) {
       guessResult = 'correct';
       message = `Congratulations! You guessed the number in ${attempts} attempts!`;
       winningGuess = guessNum;
+      mostRecentGuess = guessNum;
       gameActive = false;
       guess = '';
+      hint = null;
     } else if (attempts >= maxAttempts) {
       guessResult = 'lost';
       message = `Game over! The number was ${secretNumber}.`;
+      hint = `Your final guess was ${guessNum < secretNumber ? 'low' : 'high'}!`;
+      mostRecentGuess = guessNum;
       gameActive = false;
       guess = '';
     } else if (guessNum < secretNumber) {
       guessResult = 'too_low';
-      message = 'Too low! Try again.';
-      hint = 'Too low!';
+      message = 'Low! Try again.';
+      hint = `Your ${getOrdinal(attempts)} guess was low!`;
       mostRecentGuess = guessNum;
       guess = '';
     } else {
       guessResult = 'too_high';
-      message = 'Too high! Try again.';
-      hint = 'Too high!';
+      message = 'High! Try again.';
+      hint = `Your ${getOrdinal(attempts)} guess was high!`;
       mostRecentGuess = guessNum;
       guess = '';
     }
@@ -84,7 +98,7 @@
   }
 </script>
 
-<div class="game-container">
+<div class="game-container" class:winner={guessResult === 'correct'}>
   <h2>Number Guessing Game</h2>
   <p class="instructions">Guess a number between 1 and 500. You have {maxAttempts} attempts!</p>
   
@@ -130,8 +144,8 @@
     <div class="history">
       <h3>Guess History (Lowest to Highest)</h3>
       <div class="history-list">
-        {#each [...history].sort((a, b) => a - b) as h}
-          <span class="history-item" class:winner={h === winningGuess} class:recent={h === mostRecentGuess && h !== winningGuess}>{h}</span>
+        {#each [...history].sort((a, b) => a.number - b.number) as h}
+          <span class="history-item" class:winner={h.number === winningGuess} class:recent={h.number === mostRecentGuess && h.number !== winningGuess} class:low={h.wasLow && h.number !== winningGuess} class:high={!h.wasLow && h.number !== winningGuess}>{h.number}</span>
         {/each}
       </div>
     </div>
@@ -151,6 +165,15 @@
     width: 100%;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     color: white;
+    transition: background 0.3s ease;
+  }
+
+  .game-container.winner {
+    background: linear-gradient(135deg, #8BC34A 0%, #7cb342 100%);
+  }
+
+  .game-container.winner .message.active {
+    background: rgba(0, 100, 0, 0.3);
   }
 
   h2 {
@@ -286,16 +309,41 @@
   }
 
   .history-item.winner {
-    background: #8BC34A;
+    background: linear-gradient(135deg, #7cb342 0%, #689f38 100%);
     color: white;
     font-weight: bold;
     box-shadow: 0 0 10px rgba(139, 195, 74, 0.5);
+    border: 2px solid white;
+    animation: jiggle 1s ease-in-out infinite;
+    transform-origin: center;
   }
 
   .history-item.recent {
     background: white;
     color: #667eea;
     font-weight: bold;
+    text-shadow: none;
+    animation: jiggle 1s ease-in-out infinite;
+    transform-origin: center;
+    border: 2px solid white;
+  }
+
+  @keyframes jiggle {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    25% { transform: rotate(5deg) scale(1.05); }
+    50% { transform: rotate(-5deg) scale(1); }
+    75% { transform: rotate(5deg) scale(1.05); }
+  }
+
+  .history-item.low {
+    background: #339ddae6;
+    color: white;
+    text-shadow: none;
+  }
+
+  .history-item.high {
+    background: #da3333e6;
+    color: white;
     text-shadow: none;
   }
 
