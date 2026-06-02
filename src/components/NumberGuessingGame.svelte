@@ -145,7 +145,7 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 20px;
     padding: 2rem;
-    max-width: 500px;
+    max-width: 100%;
     width: 100%;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     color: white;

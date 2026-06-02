@@ -23,36 +23,80 @@
     const values = Object.values(data);
     const total = values.reduce((a, b) => a + b, 0);
 
+    // Define desired order
+    const desiredOrder = ['Svelte', 'Python', 'HTML', 'CSS', 'JavaScript'];
+    
+    // Reorder labels and values according to desired order
+    const orderedLabels = [];
+    const orderedValues = [];
+    
+    desiredOrder.forEach(lang => {
+      const index = labels.indexOf(lang);
+      if (index !== -1) {
+        orderedLabels.push(labels[index]);
+        orderedValues.push(values[index]);
+      }
+    });
+    
+    // Add any remaining languages not in desired order
+    labels.forEach((label, i) => {
+      if (!desiredOrder.includes(label)) {
+        orderedLabels.push(label);
+        orderedValues.push(values[i]);
+      }
+    });
+
+    const ctx = chartCanvas.getContext('2d');
+
+    // Create pattern function
+    function createPattern(colors) {
+      const patternCanvas = document.createElement('canvas');
+      const stripeWidth = 20;
+      patternCanvas.width = stripeWidth * colors.length;
+      patternCanvas.height = 40;
+      const patternCtx = patternCanvas.getContext('2d');
+      
+      colors.forEach((color, i) => {
+        patternCtx.fillStyle = color;
+        patternCtx.fillRect(i * stripeWidth, 0, stripeWidth, 40);
+      });
+      
+      return ctx.createPattern(patternCanvas, 'repeat');
+    }
+
     // Specific color mapping for languages
     const colorMap = {
       'Svelte': '#FF3E00',
       'JavaScript': '#F7DF1E',
       'CSS': '#663399',
-      'HTML': '#E34F26'
+      'HTML': ['#E34F26', '#FFFFFF'],
+      'Python': ['#FFD43B', '#4B8BBE']
     };
 
     // Generate colors for each language
-    const colors = labels.map((label) => {
+    const colors = orderedLabels.map((label) => {
       // Use specific color if defined, otherwise generate one
       if (colorMap[label]) {
-        // Convert hex to rgba with 0.75 opacity
+        if (Array.isArray(colorMap[label])) {
+          // Create pattern
+          return createPattern(colorMap[label]);
+        }
+        // Convert hex to rgba with 0.85 opacity
         const hex = colorMap[label];
         const r = parseInt(hex.slice(1, 3), 16);
         const g = parseInt(hex.slice(3, 5), 16);
         const b = parseInt(hex.slice(5, 7), 16);
-        return `rgba(${r}, ${g}, ${b}, 0.75)`;
+        return `rgba(${r}, ${g}, ${b}, 0.85)`;
       }
-      const index = labels.indexOf(label);
+      const index = orderedLabels.indexOf(label);
       const hue = (index * 137.508) % 360;
-      return `hsla(${hue}, 70%, 50%, 0.75)`;
+      return `hsla(${hue}, 70%, 50%, 0.85)`;
     });
 
     // Rename JavaScript to JS in labels
-    const displayLabels = labels.map(label =>
+    const displayLabels = orderedLabels.map(label =>
       label === 'JavaScript' ? 'JS' : label
     );
-
-    const ctx = chartCanvas.getContext('2d');
 
     if (!ctx) {
       console.error('Could not get 2D context from canvas');
@@ -64,7 +108,7 @@
       data: {
         labels: displayLabels,
         datasets: [{
-          data: values,
+          data: orderedValues,
           backgroundColor: colors,
           borderColor: '#182f4d',
           borderWidth: 2
@@ -144,7 +188,7 @@
 <style>
   .chart-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     max-height: 70vh;
     margin: 0 auto;
     padding: 2rem;
@@ -160,7 +204,8 @@
   }
 
   .chart-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
     color: white;
     margin-bottom: 1rem;
     text-align: center;
@@ -168,7 +213,7 @@
 
   @media (max-width: 1023px) {
     .chart-title {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
     }
   }
 

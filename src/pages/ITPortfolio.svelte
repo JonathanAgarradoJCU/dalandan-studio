@@ -1,10 +1,14 @@
 <script>
   import GitHubLanguageChart from '../components/GitHubLanguageChart.svelte';
   import NumberGuessingGame from '../components/NumberGuessingGame.svelte';
+  import SnakeGame from '../components/SnakeGame.svelte';
 </script>
 
 <main class="main-content">
-  <NumberGuessingGame />
+  <div class="games-container">
+    <NumberGuessingGame />
+    <SnakeGame />
+  </div>
   <GitHubLanguageChart />
 </main>
 
@@ -20,13 +24,31 @@
     justify-content: center;
     align-items: center;
     min-height: calc(100vh - 200px);
-    gap: 2rem;
+    gap: 1rem;
   }
 
-  @media (min-width: 1024px) {
+  .games-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
     .main-content {
       flex-direction: row;
       align-items: flex-start;
+    }
+
+    .games-container {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .main-content > :last-child {
+      flex: 1;
+      min-width: 300px;
     }
   }
 </style>
