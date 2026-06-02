@@ -35,11 +35,16 @@
     const colors = labels.map((label) => {
       // Use specific color if defined, otherwise generate one
       if (colorMap[label]) {
-        return colorMap[label];
+        // Convert hex to rgba with 0.75 opacity
+        const hex = colorMap[label];
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, 0.75)`;
       }
       const index = labels.indexOf(label);
       const hue = (index * 137.508) % 360;
-      return `hsl(${hue}, 70%, 50%)`;
+      return `hsla(${hue}, 70%, 50%, 0.75)`;
     });
 
     // Rename JavaScript to JS in labels
@@ -147,13 +152,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(233, 185, 112, 0.1);
-    border-radius: 1rem;
+    background: linear-gradient(135deg, #71797E 0%, #4A5568 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
   }
 
   .chart-title {
     font-size: 1.5rem;
-    color: var(--color-text);
+    color: white;
     margin-bottom: 1rem;
     text-align: center;
   }
@@ -177,7 +185,7 @@
   .loading-text,
   .error-text,
   .no-data-text {
-    color: var(--color-text);
+    color: white;
     font-size: 1.2rem;
     text-align: center;
     padding: 1rem;
