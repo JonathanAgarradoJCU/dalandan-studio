@@ -59,7 +59,7 @@
       const h = navWrapper.getBoundingClientRect().height;
       document.documentElement.style.setProperty('--nav-height', `${h}px`);
       scrollWrapper.style.marginTop = `${h}px`;
-      scrollWrapper.style.height = `calc(100vh - ${h}px)`;
+      scrollWrapper.style.height = `calc(100dvh - ${h}px)`;
     }
   }
 
@@ -75,12 +75,14 @@
     window.addEventListener('hashchange', resetScroll);
     window.addEventListener('hashchange', syncScrollOffset);
     window.addEventListener('resize', syncScrollOffset);
+    window.visualViewport?.addEventListener('resize', syncScrollOffset);
     return () => {
       navResizeObserver?.disconnect();
       window.removeEventListener('hashchange', updateBackgroundColor);
       window.removeEventListener('hashchange', resetScroll);
       window.removeEventListener('hashchange', syncScrollOffset);
       window.removeEventListener('resize', syncScrollOffset);
+      window.visualViewport?.removeEventListener('resize', syncScrollOffset);
     };
   });
 </script>
@@ -105,6 +107,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     object-fit: cover;
     opacity: 0.1;
     z-index: -2;
@@ -114,6 +117,7 @@
   .page-scroll-wrapper {
     margin-top: var(--nav-height);
     height: calc(100vh - var(--nav-height));
+    height: calc(100dvh - var(--nav-height));
     overflow-y: scroll;
     width: 100%;
     display: flex;

@@ -480,12 +480,14 @@
     padding: 1rem;
     text-align: center;
     transform: translateX(100%);
-    transition: transform 0.4s ease-in-out;
-    box-shadow: var(--shadow-nav-dropdown);
+    transition: transform 0.4s ease-in-out, box-shadow 0s linear 0.4s;
+    box-shadow: none;
   }
 
   .menu-links.active {
     transform: translateX(0);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: var(--shadow-nav-dropdown);
   }
 
   .menu-links a {
