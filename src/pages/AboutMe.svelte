@@ -46,7 +46,7 @@
 
       <div class="wiki-body">
         <p class="wiki-lead">
-          <b>DalanDan</b> is an artist, musician, and self-described "computer geek" tiger whose work spans
+          <b>DalanDan</b> — or <b>Dan</b> for short — is an artist, musician, and self-described "computer geek" tiger whose work spans
           digital illustration, music production, and computer coding.
         </p>
 
