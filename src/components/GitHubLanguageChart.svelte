@@ -116,17 +116,17 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             position: 'bottom',
             labels: {
               color: '#ffffff',
               font: {
-                size: 14,
+                size: 12,
                 family: 'Arial, sans-serif'
               },
-              padding: 20
+              padding: 12
             }
           },
           tooltip: {
@@ -211,6 +211,19 @@
     text-align: center;
   }
 
+  @media (min-width: 1024px) {
+    .chart-container {
+      max-width: 375px;
+      max-height: 65vh;
+      padding: 1.5rem;
+    }
+
+    .chart-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
   @media (max-width: 1023px) {
     .chart-title {
       font-size: 1.5rem;
@@ -220,7 +233,13 @@
   .chart-canvas {
     width: 100%;
     height: 100%;
-    max-height: 60vh;
+    max-height: 50vh;
+  }
+
+  @media (min-width: 1024px) {
+    .chart-canvas {
+      max-height: 45vh;
+    }
   }
 
   .chart-canvas.hidden {

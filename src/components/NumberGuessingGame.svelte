@@ -1,5 +1,5 @@
 <script>
-  let gameId = null;
+  let secretNumber = null;
   let guess = '';
   let message = 'Click "Start Game" to begin!';
   let attempts = 0;
@@ -12,30 +12,21 @@
   let guessResult = null;
   let hint = null;
 
-  async function startGame() {
-    loading = true;
-    try {
-      const response = await fetch('http://localhost:5000/api/game/new', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      const data = await response.json();
-      gameId = data.game_id;
-      maxAttempts = data.max_attempts;
-      message = data.message;
-      attempts = 0;
-      history = [];
-      gameActive = true;
-      guess = '';
-      hint = null;
-      guessResult = null;
-    } catch (error) {
-      message = 'Error connecting to game server. Make sure the Python backend is running.';
-    }
-    loading = false;
+  function startGame() {
+    secretNumber = Math.floor(Math.random() * 500) + 1;
+    maxAttempts = 10;
+    message = 'New game started! Guess a number between 1 and 500.';
+    attempts = 0;
+    history = [];
+    gameActive = true;
+    guess = '';
+    hint = null;
+    guessResult = null;
+    winningGuess = null;
+    mostRecentGuess = null;
   }
 
-  async function submitGuess() {
+  function submitGuess() {
     if (!guess || !gameActive) return;
     
     const guessNum = parseInt(guess);
@@ -44,35 +35,46 @@
       return;
     }
     
-    loading = true;
-    try {
-      const response = await fetch('http://localhost:5000/api/game/guess', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ game_id: gameId, guess: guessNum })
-      });
-      const data = await response.json();
-      message = data.message;
-      attempts = data.attempts;
-      history = data.history;
-      winningGuess = data.winning_guess;
-      guessResult = data.result;
-      hint = data.hint || null;
-      
-      if (data.result === 'correct' || data.result === 'lost') {
-        gameActive = false;
-        guess = '';
-      } else if (data.message.includes("already picked")) {
-        // Duplicate guess - don't update mostRecentGuess
-        guess = '';
+    if (history.includes(guessNum)) {
+      if (guessNum < secretNumber) {
+        guessResult = 'too_low';
+        hint = 'Too low!';
       } else {
-        mostRecentGuess = guessNum;
-        guess = '';
+        guessResult = 'too_high';
+        hint = 'Too high!';
       }
-    } catch (error) {
-      message = 'Error submitting guess. Check if the Python backend is running.';
+      message = "You've already picked this number. Pick another one.";
+      guess = '';
+      return;
     }
-    loading = false;
+    
+    attempts++;
+    history.push(guessNum);
+    
+    if (guessNum === secretNumber) {
+      guessResult = 'correct';
+      message = `Congratulations! You guessed the number in ${attempts} attempts!`;
+      winningGuess = guessNum;
+      gameActive = false;
+      guess = '';
+    } else if (attempts >= maxAttempts) {
+      guessResult = 'lost';
+      message = `Game over! The number was ${secretNumber}.`;
+      gameActive = false;
+      guess = '';
+    } else if (guessNum < secretNumber) {
+      guessResult = 'too_low';
+      message = 'Too low! Try again.';
+      hint = 'Too low!';
+      mostRecentGuess = guessNum;
+      guess = '';
+    } else {
+      guessResult = 'too_high';
+      message = 'Too high! Try again.';
+      hint = 'Too high!';
+      mostRecentGuess = guessNum;
+      guess = '';
+    }
   }
 
   function handleKeydown(event) {
