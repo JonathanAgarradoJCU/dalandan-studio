@@ -66,11 +66,11 @@
 
     // Specific color mapping for languages
     const colorMap = {
-      'Svelte': '#FF3E00',
+      'Svelte': '#E63700',
       'JavaScript': '#F7DF1E',
       'CSS': '#663399',
-      'HTML': ['#E34F26', '#FFFFFF'],
-      'Python': ['#FFD43B', '#4B8BBE']
+      'HTML': '#FFAA00',
+      'Python': '#4B8BBE'
     };
 
     // Generate colors for each language
