@@ -26,8 +26,13 @@
   let baseInterval = 150;
   const maxPossibleScore = (tileCount * tileCount - 3) * 10; // 144 tiles - 3 initial segments = 141 food * 10 points
   let maxScore = maxPossibleScore;
+  let audioContext;
+  let moveCounter = 0;
   
   onMount(() => {
+    // Initialize audio context
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
     // Detect mobile/tablet
     isMobile = window.innerWidth < 1024 || 'ontouchstart' in window;
     if (isMobile) {
@@ -46,6 +51,7 @@
     return () => {
       window.removeEventListener('keydown', handleKeydown);
       if (gameLoop) cancelAnimationFrame(gameLoop);
+      if (audioContext) audioContext.close();
     };
   });
   
@@ -62,9 +68,66 @@
     score = 0;
     gameOver = false;
     updateInterval = baseInterval;
+    moveCounter = 0;
     // Initialize visual snake with same positions
     visualSnake = snake.map(seg => ({ x: seg.x, y: seg.y }));
     spawnFood();
+  }
+  
+  function playEatSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(900, audioContext.currentTime + 0.1);
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  }
+  
+  function playGameOverSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.5);
+    
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+  }
+  
+  function playMoveSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Randomize between two subtle pitches
+    const pitch = Math.random() > 0.5 ? 180 : 220;
+    oscillator.frequency.setValueAtTime(pitch, audioContext.currentTime);
+    
+    // Very quiet and subtle
+    gainNode.gain.setValueAtTime(0.02, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.03);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.03);
   }
   
   function spawnFood() {
@@ -82,6 +145,11 @@
   }
   
   function startGame() {
+    // Resume audio context if suspended (browsers require user interaction)
+    if (audioContext && audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+    
     resetGame();
     gameStarted = true;
     gameOver = false;
@@ -179,6 +247,7 @@
       if (head.x === segment.x && head.y === segment.y) {
         gameOver = true;
         cancelAnimationFrame(gameLoop);
+        playGameOverSound();
         return;
       }
     }
@@ -188,6 +257,7 @@
     // Check food collision
     if (head.x === food.x && head.y === food.y) {
       score += 10;
+      playEatSound();
       spawnFood();
       // Increase speed until 3/5th of total tiles
       if (snake.length < speedLimitTiles) {
@@ -196,6 +266,11 @@
       }
     } else {
       snake.pop();
+      moveCounter++;
+      if (moveCounter >= 3) {
+        playMoveSound();
+        moveCounter = 0;
+      }
     }
   }
   
@@ -295,7 +370,34 @@
 
 <div class="snake-container">
   <h2>Snake Game</h2>
-  <p class="instructions">Use arrow keys/buttons to control the snake. Eat food to grow!</p>
+  <div class="instructions-container">
+    <p class="instructions">
+      <span class="key-icons">
+        <svg width="60" height="40" viewBox="0 0 60 40" class="wasd-icon">
+          <rect x="23" y="5" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="31" y="17" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">W</text>
+          <rect x="5" y="23" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="13" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">A</text>
+          <rect x="23" y="23" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="31" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">S</text>
+          <rect x="41" y="23" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="49" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">D</text>
+        </svg>
+        or
+        <svg width="60" height="40" viewBox="0 0 60 40" class="arrow-icon">
+          <rect x="23" y="5" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="31" y="17" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">↑</text>
+          <rect x="5" y="23" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="13" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">←</text>
+          <rect x="23" y="23" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="31" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">↓</text>
+          <rect x="41" y="23" width="16" height="16" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+          <text x="49" y="35" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">→</text>
+        </svg>
+      </span>
+      or arrow buttons to control the snake. Eat food to grow!
+    </p>
+  </div>
   
   <div class="game-area">
     <div class="score">Score: {score}/{maxScore}</div>
@@ -340,8 +442,32 @@
 
   .instructions {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     opacity: 0.9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .instructions-container {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .key-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .wasd-icon,
+  .arrow-icon {
+    vertical-align: middle;
   }
 
   .game-area {
@@ -385,7 +511,7 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease;
     background: white;
     color: #2E7D32;
   }
@@ -395,6 +521,14 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
 
+  @media (min-width: 1024px) {
+    button:hover {
+      background: #FFB74D;
+      color: black;
+      text-shadow: none;
+    }
+  }
+
   .restart-btn {
     margin-top: 0.5rem;
   }
@@ -402,8 +536,8 @@
   .arrow-buttons {
     display: grid;
     grid-template-columns: 50px 50px 50px;
-    grid-template-rows: 50px 50px 50px;
-    gap: 0.5rem;
+    grid-template-rows: 50px 50px;
+    gap: 2px;
     margin-top: 1rem;
     justify-content: center;
   }
@@ -416,9 +550,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
+    background: #333;
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid #555;
+    border-radius: 2px;
   }
 
   .arrow-btn.up {
@@ -438,7 +573,7 @@
 
   .arrow-btn.down {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 2;
   }
 
   .arrow-btn:hover {

@@ -1,7 +1,7 @@
 <script>
   let secretNumber = null;
   let guess = $state('');
-  let message = $state('Click "Start Game" to begin!');
+  let message = $state('');
   let attempts = $state(0);
   let maxAttempts = $state(10);
   let history = $state([]); // Array of { number, wasLow }
@@ -100,15 +100,19 @@
 
 <div class="game-container" class:winner={guessResult === 'correct'}>
   <h2>Number Guessing Game</h2>
-  <p class="instructions">Guess a number between 1 and 500. You have {maxAttempts} attempts!</p>
+  <div class="instructions-container">
+    <p class="instructions">Guess a number between 1 and 500. You have {maxAttempts} attempts!</p>
+  </div>
   
   <div class="game-status">
-    <div class="message {gameActive ? 'active' : 'inactive'} {guessResult === 'too_low' ? 'tooLow' : ''} {guessResult === 'too_high' ? 'tooHigh' : ''} {guessResult === 'lost' ? 'lost' : ''}">
-      {message}
-      {#if hint}
-        <div class="hint">{hint}</div>
-      {/if}
-    </div>
+    {#if gameActive || message}
+      <div class="message {gameActive ? 'active' : 'inactive'} {guessResult === 'too_low' ? 'tooLow' : ''} {guessResult === 'too_high' ? 'tooHigh' : ''} {guessResult === 'lost' ? 'lost' : ''}">
+        {message}
+        {#if hint}
+          <div class="hint">{hint}</div>
+        {/if}
+      </div>
+    {/if}
     
     {#if gameActive}
       <div class="input-section">
@@ -184,12 +188,23 @@
 
   .instructions {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     opacity: 0.9;
+  }
+
+  .instructions-container {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .game-status {
     margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .message {
@@ -259,12 +274,20 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s ease, color 0.3s ease;
   }
 
   button:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (min-width: 1024px) {
+    button:hover:not(:disabled) {
+      background: #FFB74D;
+      color: black;
+      text-shadow: none;
+    }
   }
 
   button:disabled {
@@ -281,6 +304,14 @@
     width: 100%;
     background: #fff;
     color: #667eea;
+    padding: 0.75rem 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .start-btn {
+      width: auto;
+      padding: 0.75rem 2rem;
+    }
   }
 
   .history {
