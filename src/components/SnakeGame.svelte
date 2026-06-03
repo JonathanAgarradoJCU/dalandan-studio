@@ -275,7 +275,7 @@
           current.y = target.y;
         } else {
           // Use linear interpolation based on progress for smoother movement
-          const lerpFactor = 0.5; // Higher factor = smoother, less bouncy
+          const lerpFactor = 0.8; // Higher factor = faster, more responsive
           current.x += (target.x - current.x) * lerpFactor;
           current.y += (target.y - current.y) * lerpFactor;
         }
@@ -491,6 +491,13 @@
     if (newDir !== lastDir && newDir !== opposites[lastDir]) {
       if (inputQueue.length < maxQueueSize) {
         inputQueue.push(newDir);
+        // Apply direction change immediately for instant response
+        direction = newDir;
+        // Snap visual head to target instantly
+        if (visualSnake[0]) {
+          visualSnake[0].x = snake[0].x;
+          visualSnake[0].y = snake[0].y;
+        }
       }
     }
   }
