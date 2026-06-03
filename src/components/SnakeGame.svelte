@@ -349,17 +349,15 @@
     
     // Draw snake using interpolated positions
     visualSnake.forEach((segment, index) => {
-      // Head is blue, body follows pattern: Orange, Macaroni, Orange, Blue repeating
+      // Head is blue, body follows pattern: Orange, Orange, Macaroni, Blue repeating
       if (index === 0) {
         ctx.fillStyle = '#2196F3'; // Blue head
       } else {
         const patternIndex = (index - 1) % 4;
-        if (patternIndex === 0) {
+        if (patternIndex === 0 || patternIndex === 1) {
           ctx.fillStyle = '#FF9800'; // Orange
-        } else if (patternIndex === 1) {
-          ctx.fillStyle = '#FFE082'; // Macaroni (slight orange tint)
         } else if (patternIndex === 2) {
-          ctx.fillStyle = '#FF9800'; // Orange
+          ctx.fillStyle = '#FFE082'; // Macaroni (slight orange tint)
         } else {
           ctx.fillStyle = '#2196F3'; // Blue
         }
