@@ -171,6 +171,26 @@
     oscillator.start(audioContext.currentTime);
     oscillator.stop(audioContext.currentTime + 0.3);
   }
+
+  function playClickSound() {
+    if (!audioContext) return;
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Keyboard type sound - short click
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(300, audioContext.currentTime + 0.05);
+    
+    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.05);
+  }
   
   function spawnFood() {
     food = {
@@ -524,10 +544,10 @@
     </div>
     
     <div class="arrow-buttons">
-      <button class="arrow-btn up" on:click={() => handleDirection('up')}>↑</button>
-      <button class="arrow-btn left" on:click={() => handleDirection('left')}>←</button>
-      <button class="arrow-btn right" on:click={() => handleDirection('right')}>→</button>
-      <button class="arrow-btn down" on:click={() => handleDirection('down')}>↓</button>
+      <button class="arrow-btn up" on:click={() => { playClickSound(); handleDirection('up'); }}>↑</button>
+      <button class="arrow-btn left" on:click={() => { playClickSound(); handleDirection('left'); }}>←</button>
+      <button class="arrow-btn right" on:click={() => { playClickSound(); handleDirection('right'); }}>→</button>
+      <button class="arrow-btn down" on:click={() => { playClickSound(); handleDirection('down'); }}>↓</button>
     </div>
   </div>
   

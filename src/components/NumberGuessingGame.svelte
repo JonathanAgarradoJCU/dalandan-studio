@@ -242,11 +242,11 @@
           min="1" 
           max="500" 
           placeholder="Enter your guess (1-500)"
-          on:keydown={handleKeydown}
+          onkeydown={handleKeydown}
           disabled={loading}
         />
         <button 
-          on:click={submitGuess} 
+          onclick={submitGuess} 
           disabled={loading || !guess}
           class="guess-btn"
         >
@@ -255,7 +255,7 @@
       </div>
     {:else}
       <button 
-        on:click={startGame} 
+        onclick={startGame} 
         disabled={loading}
         class="start-btn"
       >
@@ -280,7 +280,7 @@
   </div>
   
   {#if gameActive}
-    <button class="end-game-btn" on:click={endGame}>End Game</button>
+    <button class="end-game-btn" onclick={endGame}>End Game</button>
   {/if}
 </div>
 
@@ -365,12 +365,6 @@
     margin-top: 0.5rem;
     font-size: 0.9rem;
     opacity: 0.9;
-  }
-
-  .highlight-number {
-    font-weight: bold;
-    color: #FFB74D;
-    text-shadow: 0 0 10px rgba(255, 183, 77, 0.5);
   }
 
   :global(.highlight-number) {
