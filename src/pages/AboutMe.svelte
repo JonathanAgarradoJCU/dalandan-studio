@@ -46,14 +46,14 @@
 
       <div class="wiki-body">
         <p class="wiki-lead">
-          <b>DalanDan</b> — or <b>Dan</b> for short — is an artist, musician, and self-described "computer geek" tiger whose work spans
+          <b>DalanDan</b> (or <b>Dan</b> for short) is an artist, musician, and self-described "computer geek" tiger whose work spans
           digital illustration, music production, and computer coding.
         </p>
 
         <section class="wiki-section">
           <h2>Early life</h2>
           <p>
-            A Filipino by nationality, Dan was raised in Singapore, where he developed a lasting
+            Filipino by nationality, Dan was raised in Singapore, where he developed a lasting
             appreciation for diverse cultures and perspectives. He enjoys meeting people from around the
             world, exploring new places, and learning about their stories and traditions.
           </p>
