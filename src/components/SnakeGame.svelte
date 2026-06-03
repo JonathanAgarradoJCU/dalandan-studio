@@ -185,7 +185,7 @@
     oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
     oscillator.frequency.exponentialRampToValueAtTime(300, audioContext.currentTime + 0.05);
     
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gainNode.gain.setValueAtTime(0.04, audioContext.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.05);
     
     oscillator.start(audioContext.currentTime);
