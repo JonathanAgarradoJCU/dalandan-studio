@@ -123,11 +123,21 @@
     display: flex;
     flex-direction: column;
     scroll-behavior: smooth;
-    scroll-padding-top: var(--nav-height);
+    scroll-padding-top: calc(var(--nav-height) + 50px);
   }
 
   .page-scroll-wrapper.home-page {
     overflow-y: hidden;
+  }
+
+  .page-scroll-wrapper.art-page {
+    scroll-padding-top: calc(var(--nav-height) + 60px);
+  }
+
+  @media (max-width: 1023px) {
+    .page-scroll-wrapper.art-page {
+      scroll-padding-top: calc(var(--nav-height) + 100px);
+    }
   }
 
   .router-container {
