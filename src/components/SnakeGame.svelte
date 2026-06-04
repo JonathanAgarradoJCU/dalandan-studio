@@ -15,6 +15,7 @@
   let score = 0;
   let gameOver = false;
   let gameStarted = false;
+  let playerWon = false;
   const gridSize = 20;
   const tileCount = 12;
   let lastUpdateTime = 0;
@@ -68,6 +69,7 @@
     inputQueue = [];
     score = 0;
     gameOver = false;
+    playerWon = false;
     updateInterval = baseInterval;
     moveCounter = 0;
     // Initialize visual snake with same positions
@@ -326,6 +328,15 @@
       }
     }
     
+    // Check win condition - snake fills entire board
+    if (snake.length === totalTiles) {
+      gameOver = true;
+      playerWon = true;
+      cancelAnimationFrame(gameLoop);
+      playEatSound();
+      return;
+    }
+    
     snake.unshift(head);
     
     // Check food collision
@@ -536,7 +547,7 @@
       {/if}
       {#if gameOver}
         <div class="game-over">
-          <p>Game Over!</p>
+          <p>{playerWon ? 'Congratulations, you won!' : 'Game Over!'}</p>
           <p>Final Score: {score}</p>
           <button class="restart-btn" on:click={startGame}>Play Again</button>
         </div>
