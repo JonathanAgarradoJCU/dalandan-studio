@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
+  import { fade } from 'svelte/transition';
   import { circlesMode, circlesAnimating, artActiveSection } from '../stores/circlesStore.js';
   import logoPng from '../assets/logos/dalandan-transparent-cropped.png';
 
@@ -35,23 +36,49 @@
   }
 
   function scrollToArtSection(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      const scrollContainer = document.querySelector('.page-scroll-wrapper');
-      const navWrapper = document.querySelector('.nav-wrapper');
-      if (scrollContainer && navWrapper) {
-        const navHeight = navWrapper.getBoundingClientRect().height;
-        const sectionsToggleHeight = window.innerWidth <= 1023 ? 40 : 0;
-        const offset = navHeight + sectionsToggleHeight;
-        const elPosition = el.offsetTop;
-        scrollContainer.scrollTo({
-          top: elPosition - offset,
-          behavior: 'smooth'
-        });
-      } else {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // If not on art page, navigate to art page first
+    if (clickedLink !== '#/art') {
+      window.location.hash = '#/art';
+      // Wait for page to load then scroll
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          const scrollContainer = document.querySelector('.page-scroll-wrapper');
+          const navWrapper = document.querySelector('.nav-wrapper');
+          if (scrollContainer && navWrapper) {
+            const navHeight = navWrapper.getBoundingClientRect().height;
+            const sectionsToggleHeight = window.innerWidth <= 1023 ? 40 : 0;
+            const offset = navHeight + sectionsToggleHeight;
+            const elPosition = el.offsetTop;
+            scrollContainer.scrollTo({
+              top: elPosition - offset,
+              behavior: 'smooth'
+            });
+          } else {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }, 100);
+    } else {
+      // Already on art page, just scroll
+      const el = document.getElementById(id);
+      if (el) {
+        const scrollContainer = document.querySelector('.page-scroll-wrapper');
+        const navWrapper = document.querySelector('.nav-wrapper');
+        if (scrollContainer && navWrapper) {
+          const navHeight = navWrapper.getBoundingClientRect().height;
+          const sectionsToggleHeight = window.innerWidth <= 1023 ? 40 : 0;
+          const offset = navHeight + sectionsToggleHeight;
+          const elPosition = el.offsetTop;
+          scrollContainer.scrollTo({
+            top: elPosition - offset,
+            behavior: 'smooth'
+          });
+        } else {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        artSectionsOpen = false;
       }
-      artSectionsOpen = false;
     }
   }
 
@@ -183,23 +210,11 @@
   </nav>
 
   {#if clickedLink === '#/art'}
-    <div class="art-sections-bar">
-      <button class="sections-toggle" onclick={toggleArtSections} aria-expanded={artSectionsOpen} aria-controls="sections-dropdown">
-        <span>{$artActiveSection}</span>
-        <span class="toggle-icon" class:open={artSectionsOpen}>&#9662;</span>
-      </button>
-      <nav id="sections-dropdown" class="sections-dropdown" class:open={artSectionsOpen} aria-label="Art sections">
-        <button class="section-btn" onclick={() => scrollToArtSection('commissions')}>Commissions</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('tos')}>Terms of Service</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('gallery')}>Gallery</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test1')}>Test 1</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test2')}>Test 2</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test3')}>Test 3</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test4')}>Test 4</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test5')}>Test 5</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test6')}>Test 6</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test7')}>Test 7</button>
-        <button class="section-btn" onclick={() => scrollToArtSection('test8')}>Test 8</button>
+    <div class="art-sections-bar" transition:fade={{ duration: 300 }}>
+      <nav class="sections-titles" aria-label="Art sections">
+        <button class="section-title" onclick={() => scrollToArtSection('gallery')} class:active={$artActiveSection === 'Gallery'}>Gallery</button>
+        <button class="section-title" onclick={() => scrollToArtSection('commissions')} class:active={$artActiveSection === 'Commissions'}>Commissions</button>
+        <button class="section-title" onclick={() => scrollToArtSection('tos')} class:active={$artActiveSection === 'Terms of Service'}>Terms of Service</button>
       </nav>
     </div>
   {/if}
@@ -509,7 +524,48 @@
   }
 
   .art-sections-bar {
-    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-background);
+    z-index: 100;
+  }
+
+  .sections-titles {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .section-title {
+    font-family: var(--font-family-base);
+    font-size: 0.9rem;
+    color: var(--color-text);
+    text-align: center;
+    padding: 0.4rem 1rem;
+    text-shadow: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  .section-title:hover {
+    color: var(--color-hover);
+  }
+
+  .section-title.active {
+    background-color: rgba(233, 185, 112, 0.3);
+    color: var(--color-hover);
   }
 
   .circle-menu-link {
@@ -579,104 +635,13 @@
       text-shadow: none;
     }
 
-    .art-sections-bar {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0.25rem 1rem 0.5rem;
-      background-color: transparent;
-    }
-
-    .sections-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      width: 100%;
-      max-width: 280px;
-      background-color: var(--color-menu-links);
-      filter: brightness(1.7);
-      border: none;
-      font-family: var(--font-family-base);
-      font-size: 1rem;
-      color: #ffffff;
-      cursor: pointer;
-      padding: 0.5rem 1rem;
-      border-radius: var(--border-radius-card);
-      text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .sections-toggle:hover {
-      background-color: rgba(233, 185, 112, 0.35);
-      color: #ffffff;
-    }
-
-    .sections-toggle:active,
-    .sections-toggle:focus {
-      background-color: var(--color-menu-links);
-      outline: none;
-    }
-
-    .toggle-icon {
-      display: inline-block;
-      transition: transform 0.3s ease;
-      font-size: 0.8rem;
-    }
-
-    .toggle-icon.open {
-      transform: rotate(180deg);
-    }
-
-    .sections-dropdown {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.3s ease, margin-top 0.3s ease, padding 0.3s ease;
-      margin-top: 0;
-      padding: 0;
-      gap: 0;
-      width: 100%;
+    .sections-titles {
       max-width: 280px;
     }
 
-    .sections-dropdown.open {
-      max-height: 300px;
-      opacity: 1;
-      margin-top: 0.5rem;
-      padding: 0.5rem;
-      gap: 0.35rem;
-      border-radius: var(--border-radius-card);
-      background-color: var(--color-background);
-      transition: background-color 0.6s ease;
-    }
-
-    .section-btn {
-      background: none;
-      border: none;
-      font-family: var(--font-family-base);
+    .section-title {
       font-size: 0.85rem;
-      color: var(--color-text);
-      text-align: center;
       padding: 0.35rem 0.75rem;
-      cursor: pointer;
-      border-radius: 0.5rem;
-      transition: background-color 0.2s, color 0.2s;
-      text-shadow: inherit;
-      flex: 0 1 auto;
-    }
-
-    .section-btn:hover {
-      background-color: rgba(233, 185, 112, 0.2);
-      color: var(--color-hover);
     }
   }
 
