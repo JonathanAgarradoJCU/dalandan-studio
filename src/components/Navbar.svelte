@@ -305,6 +305,9 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
   }
 
   .nav-circle {
@@ -403,6 +406,8 @@
     display: none;
     gap: 0.5rem;
     align-items: center;
+    padding: 0.5rem;
+    border-radius: 1rem;
   }
 
   .desktop-links a {
