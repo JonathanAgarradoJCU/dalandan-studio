@@ -2,6 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
   import { circlesMode, circlesAnimating, artActiveSection } from '../stores/circlesStore.js';
+  import { theme } from '../stores/themeStore.js';
   import logoPng from '../assets/logos/dalandan-transparent-cropped.png';
 
   let menuOpen = $state(false);
@@ -206,6 +207,9 @@
 
     <button class="menu-toggle" aria-label="Toggle navigation" onclick={toggleMenu}>
       {menuOpen ? '✕' : '☰'}
+    </button>
+    <button class="theme-toggle" aria-label="Toggle theme" onclick={() => theme.toggle()}>
+      {$theme === 'light' ? '🌙' : '☀️'}
     </button>
   </nav>
 
@@ -481,6 +485,24 @@
     text-align: center;
   }
 
+  .theme-toggle {
+    background: none;
+    border: none;
+    color: var(--color-text);
+    font-size: 1.5rem;
+    font-weight: 400;
+    cursor: pointer;
+    z-index: 110;
+    width: 30px;
+    text-align: center;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  .theme-toggle:hover {
+    transform: scale(1.1);
+  }
+
   /* Mobile menu links */
   .menu-links {
     display: none;
@@ -626,6 +648,10 @@
     }
 
     .menu-toggle {
+      display: block;
+    }
+
+    .theme-toggle {
       display: block;
     }
 

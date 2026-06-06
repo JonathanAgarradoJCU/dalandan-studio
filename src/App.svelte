@@ -10,6 +10,7 @@
   import Art from './pages/Art.svelte';
   import Music from './pages/Music.svelte';
   import ITPortfolio from './pages/ITPortfolio.svelte';
+  import { theme } from './stores/themeStore.js';
   import crumpledPaper from './assets/crumpled_paper.webp';
 
   const routes = {
@@ -28,20 +29,42 @@
   function updateBackgroundColor() {
     const hash = window.location.hash;
     currentHash = hash || '#/';
-    let color = '#182f4d';
-    let menuColor = '#050f1a';
+    const isDark = $theme === 'dark';
+
+    // Light mode colors
+    const lightColors = {
+      default: '#182f4d',
+      art: '#5c2a2a',
+      music: '#2a5c3a',
+      it: '#2a2a5c',
+    };
+
+    // Dark mode colors (darker shades)
+    const darkColors = {
+      default: '#0a1a2e',
+      art: '#2d1515',
+      music: '#152e1d',
+      it: '#15152e',
+    };
+
+    const colors = isDark ? darkColors : lightColors;
+
+    let color = colors.default;
+    let menuColor = isDark ? '#020812' : '#050f1a';
+
     if (hash === '#/art') {
-      color = '#5c2a2a';
-      menuColor = '#1a0d0d';
+      color = colors.art;
+      menuColor = isDark ? '#0d0707' : '#1a0d0d';
     }
     else if (hash === '#/music') {
-      color = '#2a5c3a';
-      menuColor = '#0d1a12';
+      color = colors.music;
+      menuColor = isDark ? '#070d09' : '#0d1a12';
     }
     else if (hash === '#/it-portfolio') {
-      color = '#2a2a5c';
-      menuColor = '#0d0d1a';
+      color = colors.it;
+      menuColor = isDark ? '#07070d' : '#0d0d1a';
     }
+
     document.documentElement.style.setProperty('--color-background', color);
     document.documentElement.style.setProperty('--color-menu-links', menuColor);
   }
@@ -76,6 +99,12 @@
     window.addEventListener('hashchange', syncScrollOffset);
     window.addEventListener('resize', syncScrollOffset);
     window.visualViewport?.addEventListener('resize', syncScrollOffset);
+
+    // Subscribe to theme changes
+    const unsubscribe = theme.subscribe(() => {
+      updateBackgroundColor();
+    });
+
     return () => {
       navResizeObserver?.disconnect();
       window.removeEventListener('hashchange', updateBackgroundColor);
@@ -83,6 +112,7 @@
       window.removeEventListener('hashchange', syncScrollOffset);
       window.removeEventListener('resize', syncScrollOffset);
       window.visualViewport?.removeEventListener('resize', syncScrollOffset);
+      unsubscribe();
     };
   });
 </script>
