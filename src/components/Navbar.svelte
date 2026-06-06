@@ -183,7 +183,7 @@
     <ul class="desktop-links">
       <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
       {#if mode === 'nav'}
-        <li class="nav-circles" class:art-active={clickedLink === '#/art'} class:it-active={clickedLink === '#/it-portfolio'}>
+        <li class="nav-circles" class:art-active={clickedLink === '#/art'} class:it-active={clickedLink === '#/it-portfolio'} class:dark={$theme === 'dark'}>
           <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
             <span class="nav-circle-text">Art</span>
           </button>
@@ -205,12 +205,14 @@
       </li>
     </ul>
 
-    <button class="menu-toggle" aria-label="Toggle navigation" onclick={toggleMenu}>
-      {menuOpen ? '✕' : '☰'}
-    </button>
-    <button class="theme-toggle" aria-label="Toggle theme" onclick={() => theme.toggle()}>
-      {$theme === 'light' ? '☀️' : '🌙'}
-    </button>
+    <div class="nav-buttons">
+      <button class="theme-toggle" aria-label="Toggle theme" onclick={() => theme.toggle()}>
+        {$theme === 'light' ? '☀️' : '🌙'}
+      </button>
+      <button class="menu-toggle" aria-label="Toggle navigation" onclick={toggleMenu}>
+        {menuOpen ? '✕' : '☰'}
+      </button>
+    </div>
   </nav>
 
   {#if clickedLink === '#/art'}
@@ -312,6 +314,10 @@
     padding: 0.5rem;
     border-radius: 1rem;
     background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .nav-circles.dark {
+    background-color: rgba(0, 0, 0, 0.5);
   }
 
   .nav-circle {
@@ -475,32 +481,50 @@
   .menu-toggle {
     display: none;
     background: none;
-    border: none;
-    color: var(--color-text);
-    font-size: 1.8rem;
-    font-weight: 400;
-    cursor: pointer;
-    z-index: 110;
-    width: 30px;
-    text-align: center;
-  }
-
-  .theme-toggle {
-    background: none;
-    border: none;
+    border: 2px solid var(--color-text);
     color: var(--color-text);
     font-size: 1.5rem;
     font-weight: 400;
     cursor: pointer;
     z-index: 110;
-    width: 30px;
+    width: 36px;
+    height: 36px;
     text-align: center;
-    margin-left: 0.5rem;
-    transition: transform 0.2s ease;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+
+  .menu-toggle:hover {
+    background-color: var(--color-text);
+    color: var(--color-background);
+  }
+
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: 2px solid var(--color-text);
+    color: var(--color-text);
+    font-size: 1.5rem;
+    font-weight: 400;
+    cursor: pointer;
+    z-index: 110;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    border-radius: 50%;
+    margin-left: 0;
+    transition: all 0.2s ease;
+    opacity: 1;
   }
 
   .theme-toggle:hover {
-    transform: scale(1.1);
+    background-color: var(--color-text);
+    color: var(--color-background);
   }
 
   /* Mobile menu links */
