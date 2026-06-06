@@ -41,32 +41,40 @@
 
     // Dark mode colors (darker shades)
     const darkColors = {
-      default: '#0a1a2e',
-      art: '#2d1515',
-      music: '#152e1d',
-      it: '#15152e',
+      default: '#02050a',
+      art: '#0d0505',
+      music: '#050a07',
+      it: '#05050a',
     };
 
     const colors = isDark ? darkColors : lightColors;
 
     let color = colors.default;
-    let menuColor = isDark ? '#020812' : '#050f1a';
+    let menuColor = isDark ? '#02050a' : '#050f1a';
 
     if (hash === '#/art') {
       color = colors.art;
-      menuColor = isDark ? '#0d0707' : '#1a0d0d';
+      menuColor = isDark ? '#0a0505' : '#1a0d0d';
     }
     else if (hash === '#/music') {
       color = colors.music;
-      menuColor = isDark ? '#070d09' : '#0d1a12';
+      menuColor = isDark ? '#050a07' : '#0d1a12';
     }
     else if (hash === '#/it-portfolio') {
       color = colors.it;
-      menuColor = isDark ? '#07070d' : '#0d0d1a';
+      menuColor = isDark ? '#05050a' : '#0d0d1a';
     }
+
+    // Text colors
+    const textColor = isDark ? '#ffffff' : '#ffffff';
+    const textMuted = isDark ? '#d0d0d0' : '#ffffff';
+    const hoverColor = isDark ? '#e9b970' : '#e9b970';
 
     document.documentElement.style.setProperty('--color-background', color);
     document.documentElement.style.setProperty('--color-menu-links', menuColor);
+    document.documentElement.style.setProperty('--color-text', textColor);
+    document.documentElement.style.setProperty('--color-text-muted', textMuted);
+    document.documentElement.style.setProperty('--color-hover', hoverColor);
   }
 
   function resetScroll() {

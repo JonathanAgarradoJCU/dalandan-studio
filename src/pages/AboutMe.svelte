@@ -1,8 +1,9 @@
 <script>
   import profileImg from '../assets/DalanDan-by-Koul.jpg';
+  import { theme } from '../stores/themeStore.js';
 </script>
 
-<main class="wiki-page">
+<main class="wiki-page" class:dark={$theme === 'dark'}>
   <article class="wiki-article">
     <h1 class="wiki-title">DalanDan</h1>
     <p class="wiki-tagline">From Skibidipedia, the fake encyclopedia</p>
@@ -130,6 +131,53 @@
     background-color: #ffffff;
     text-shadow: none;
     animation: fadeInBg 0.4s ease-out;
+  }
+
+  .wiki-page.dark {
+    color: #ffffff;
+    background-color: #02050a;
+  }
+
+  .wiki-page.dark .wiki-title {
+    border-bottom-color: #3a3a3a;
+  }
+
+  .wiki-page.dark .wiki-tagline {
+    color: #b0b0b0;
+  }
+
+  .wiki-page.dark .wiki-infobox {
+    background: #0a0a0a;
+    border-color: #3a3a3a;
+  }
+
+  .wiki-page.dark .infobox-header {
+    background: #1a1a1a;
+  }
+
+  .wiki-page.dark .infobox-caption {
+    color: #b0b0b0;
+  }
+
+  .wiki-page.dark .infobox-table th,
+  .wiki-page.dark .infobox-table td {
+    border-bottom-color: #1a1a1a;
+  }
+
+  .wiki-page.dark .infobox-table a {
+    color: #e9b970;
+  }
+
+  .wiki-page.dark .sub-text {
+    color: #b0b0b0;
+  }
+
+  .wiki-page.dark .wiki-section h2 {
+    border-bottom-color: #3a3a3a;
+  }
+
+  .wiki-page.dark .wiki-see-also a {
+    color: #e9b970;
   }
 
   @keyframes fadeInBg {

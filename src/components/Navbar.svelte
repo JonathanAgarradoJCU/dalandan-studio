@@ -209,7 +209,7 @@
       {menuOpen ? '✕' : '☰'}
     </button>
     <button class="theme-toggle" aria-label="Toggle theme" onclick={() => theme.toggle()}>
-      {$theme === 'light' ? '🌙' : '☀️'}
+      {$theme === 'light' ? '☀️' : '🌙'}
     </button>
   </nav>
 
