@@ -502,7 +502,7 @@
   .nav-buttons {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
   }
 
   .theme-toggle {
@@ -677,6 +677,11 @@
 
     .theme-toggle {
       display: block;
+    }
+
+    .nav-buttons {
+      flex-direction: column;
+      gap: 0.3rem;
     }
 
     .menu-links {
