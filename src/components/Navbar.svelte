@@ -246,6 +246,7 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    height: 80px;
   }
 
   .navbar {
@@ -254,9 +255,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     position: relative;
     z-index: 101;
+    height: 80px;
   }
 
   .nav-logo-container {
@@ -272,8 +274,8 @@
   }
 
   .logo-image {
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     cursor: pointer;
     transition: transform 0.2s ease;
     image-rendering: auto;
@@ -287,8 +289,8 @@
 
   @media (min-width: 1024px) {
     .logo-image {
-      width: 80px;
-      height: 80px;
+      width: 64px;
+      height: 64px;
     }
   }
 
@@ -647,6 +649,15 @@
     .mobile-circles {
       display: flex;
       gap: 0.75rem;
+    }
+
+    .nav-wrapper {
+      height: 70px;
+    }
+
+    .navbar {
+      height: 70px;
+      padding: 0 1rem;
     }
 
     .circle-menu-link a {
