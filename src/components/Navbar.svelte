@@ -109,7 +109,7 @@
     if (clickedLink === '#/' || clickedLink === '') {
       circlesMode.set('hero');
       circlesAnimating.set(false);
-    } else if (clickedLink === '#/art' || clickedLink === '#/music' || clickedLink === '#/it-portfolio' || clickedLink === '#/about-me' || clickedLink === '#/contact-me') {
+    } else if (clickedLink === '#/art' || clickedLink === '#/music' || clickedLink === '#/computer-stuff' || clickedLink === '#/about-me' || clickedLink === '#/contact-me') {
       circlesMode.set('nav');
       circlesAnimating.set(false);
     } else {
@@ -174,8 +174,8 @@
         <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} tabindex="-1" onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
           <span class="nav-circle-text">Music</span>
         </button>
-        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} tabindex="-1" onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
-          <span class="nav-circle-text">IT</span>
+        <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/computer-stuff'} tabindex="-1" onclick={() => handleNavCircleClick('#/computer-stuff')} aria-label="Computer Stuff">
+          <span class="nav-circle-text">Computer</span>
         </button>
       </div>
     {/if}
@@ -183,15 +183,15 @@
     <ul class="desktop-links">
       <li><a href="#/" class:clicked={clickedLink === '#/'} onclick={triggerClickEffect}>Home</a></li>
       {#if mode === 'nav'}
-        <li class="nav-circles" class:art-active={clickedLink === '#/art'} class:it-active={clickedLink === '#/it-portfolio'} class:dark={$theme === 'dark'}>
+        <li class="nav-circles" class:art-active={clickedLink === '#/art'} class:computer-active={clickedLink === '#/computer-stuff'} class:dark={$theme === 'dark'}>
           <button class="nav-circle nav-circle-red" class:visible={circlesVisible} class:active={clickedLink === '#/art'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/art')} aria-label="Art">
             <span class="nav-circle-text">Art</span>
           </button>
           <button class="nav-circle nav-circle-green" class:visible={circlesVisible} class:active={clickedLink === '#/music'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/music')} aria-label="Music">
             <span class="nav-circle-text">Music</span>
           </button>
-          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/it-portfolio'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
-            <span class="nav-circle-text">IT</span>
+          <button class="nav-circle nav-circle-blue" class:visible={circlesVisible} class:active={clickedLink === '#/computer-stuff'} inert={!circlesVisible} onclick={() => handleNavCircleClick('#/computer-stuff')} aria-label="Computer Stuff">
+            <span class="nav-circle-text">Computer</span>
           </button>
         </li>
       {/if}
@@ -230,7 +230,7 @@
     {#if clickedLink !== '#/' && clickedLink !== ''}
       <li class="circle-menu-link menu-link-red"><a href="#/art" class:clicked={clickedLink === '#/art'} onclick={closeMenu} tabindex="-1">Art</a></li>
       <li class="circle-menu-link menu-link-green"><a href="#/music" class:clicked={clickedLink === '#/music'} onclick={closeMenu} tabindex="-1">Music</a></li>
-      <li class="circle-menu-link menu-link-blue"><a href="#/it-portfolio" class:clicked={clickedLink === '#/it-portfolio'} onclick={closeMenu} tabindex="-1">IT Portfolio</a></li>
+      <li class="circle-menu-link menu-link-blue"><a href="#/computer-stuff" class:clicked={clickedLink === '#/computer-stuff'} onclick={closeMenu} tabindex="-1">Computer Stuff</a></li>
     {/if}
     <li><a href="#/about-me" class:clicked={clickedLink === '#/about-me'} onclick={closeMenu} tabindex="-1">About Me</a></li>
     <li>
@@ -352,17 +352,17 @@
     }
 
     .nav-circles.art-active,
-    .nav-circles.it-active {
+    .nav-circles.computer-active {
       gap: 0.5rem;
     }
 
     .nav-circles.art-active .nav-circle-red,
-    .nav-circles.it-active .nav-circle-green {
+    .nav-circles.computer-active .nav-circle-green {
       margin-right: 1.25rem;
     }
 
     .nav-circles.art-active .nav-circle-green,
-    .nav-circles.it-active .nav-circle-blue {
+    .nav-circles.computer-active .nav-circle-blue {
       margin-left: 1.25rem;
     }
 

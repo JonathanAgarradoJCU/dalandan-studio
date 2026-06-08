@@ -29,8 +29,8 @@
       <button class="circle circle-green" inert={!circlesVisible} onclick={() => handleCircleClick('#/music')} aria-label="Music">
         <span class="circle-text">Music</span>
       </button>
-      <button class="circle circle-blue" inert={!circlesVisible} onclick={() => handleCircleClick('#/it-portfolio')} aria-label="IT Portfolio">
-        <span class="circle-text">IT Portfolio</span>
+      <button class="circle circle-blue" inert={!circlesVisible} onclick={() => handleCircleClick('#/computer-stuff')} aria-label="Computer Stuff">
+        <span class="circle-text">Computer Stuff</span>
       </button>
     </div>
   </div>

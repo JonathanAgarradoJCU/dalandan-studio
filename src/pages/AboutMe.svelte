@@ -83,7 +83,7 @@
             running FL Studio, he began experimenting with electronic and experimental sounds. <a href="https://open.spotify.com/artist/4Vxw9rrGU0x853WoFBJngv?si=odM_sNGuTF25zAZt3pnRaQ" target="_blank" rel="noopener noreferrer">A handful
             of his tracks were released on Spotify under the <i>DalanDan</i> name</a>.
           </p>
-          <h3>IT & Development</h3>
+          <h3>Computer & Development</h3>
           <p>
             A longtime fascination with computers — particularly user interfaces and video games —
             eventually led Dan into software development. He began coding around 2022, but his
@@ -111,7 +111,7 @@
           <ul class="wiki-see-also">
             <li><a href="#/art">Art portfolio</a></li>
             <li><a href="#/music">Music releases</a></li>
-            <li><a href="#/it-portfolio">IT portfolio</a></li>
+            <li><a href="#/computer-stuff">Computer stuff</a></li>
           </ul>
         </section>
       </div>

@@ -9,7 +9,7 @@
   import AboutMe from './pages/AboutMe.svelte';
   import Art from './pages/Art.svelte';
   import Music from './pages/Music.svelte';
-  import ITPortfolio from './pages/ITPortfolio.svelte';
+  import ComputerStuff from './pages/ComputerStuff.svelte';
   import { theme } from './stores/themeStore.js';
   import crumpledPaper from './assets/crumpled_paper.webp';
 
@@ -19,7 +19,7 @@
     '/about-me': AboutMe,
     '/art': Art,
     '/music': Music,
-    '/it-portfolio': ITPortfolio,
+    '/computer-stuff': ComputerStuff,
   };
 
   let scrollWrapper;
@@ -36,7 +36,7 @@
       default: '#182f4d',
       art: '#5c2a2a',
       music: '#2a5c3a',
-      it: '#2a2a5c',
+      computer: '#2a2a5c',
     };
 
     // Dark mode colors (darker shades)
@@ -44,7 +44,7 @@
       default: '#02050a',
       art: '#0d0505',
       music: '#050a07',
-      it: '#05050a',
+      computer: '#05050a',
     };
 
     const colors = isDark ? darkColors : lightColors;
@@ -60,8 +60,8 @@
       color = colors.music;
       menuColor = isDark ? '#050a07' : '#0d1a12';
     }
-    else if (hash === '#/it-portfolio') {
-      color = colors.it;
+    else if (hash === '#/computer-stuff') {
+      color = colors.computer;
       menuColor = isDark ? '#05050a' : '#0d0d1a';
     }
 
