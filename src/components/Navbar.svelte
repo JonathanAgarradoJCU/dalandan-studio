@@ -529,6 +529,15 @@
     color: var(--color-background);
   }
 
+  @media (max-width: 1023px) {
+    .menu-toggle,
+    .theme-toggle {
+      width: 32px;
+      height: 32px;
+      font-size: 1.2rem;
+    }
+  }
+
   /* Mobile menu links */
   .menu-links {
     display: none;
