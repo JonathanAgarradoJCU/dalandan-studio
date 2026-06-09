@@ -3,7 +3,7 @@
   import { fade } from 'svelte/transition';
   import { circlesMode, circlesAnimating, artActiveSection } from '../stores/circlesStore.js';
   import { theme } from '../stores/themeStore.js';
-  import { scrollToSection, SECTIONS_TOGGLE_HEIGHT } from '../utils/scrollUtils.js';
+  import { scrollToSection, SECTIONS_TOGGLE_HEIGHT, SECTIONS_TOGGLE_HEIGHT_DESKTOP } from '../utils/scrollUtils.js';
   import logoPng from '../assets/logos/dalandan-transparent-cropped.png';
 
   let menuOpen = $state(false);
@@ -39,12 +39,14 @@
       window.location.hash = '#/art';
       // Wait for page to load then scroll
       setTimeout(() => {
-        const sectionsToggleHeight = window.innerWidth <= 1023 ? SECTIONS_TOGGLE_HEIGHT : 0;
+        const isMobile = window.innerWidth <= 1023;
+        const sectionsToggleHeight = isMobile ? SECTIONS_TOGGLE_HEIGHT : SECTIONS_TOGGLE_HEIGHT_DESKTOP;
         scrollToSection(id, sectionsToggleHeight);
       }, 100);
     } else {
       // Already on art page, just scroll
-      const sectionsToggleHeight = window.innerWidth <= 1023 ? SECTIONS_TOGGLE_HEIGHT : 0;
+      const isMobile = window.innerWidth <= 1023;
+      const sectionsToggleHeight = isMobile ? SECTIONS_TOGGLE_HEIGHT : SECTIONS_TOGGLE_HEIGHT_DESKTOP;
       scrollToSection(id, sectionsToggleHeight);
       artSectionsOpen = false;
     }

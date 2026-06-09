@@ -33,6 +33,11 @@ export function getNavHeight() {
 }
 
 /**
- * Height of the sections toggle bar on mobile
+ * Height of the sections toggle bar on mobile (in pixels)
  */
 export const SECTIONS_TOGGLE_HEIGHT = 40;
+
+/**
+ * Height of the sections toggle bar on desktop (in pixels)
+ */
+export const SECTIONS_TOGGLE_HEIGHT_DESKTOP = 55;
