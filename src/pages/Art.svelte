@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { artActiveSection } from '../stores/circlesStore.js';
   import { galleryItems, categories } from '../data/galleryData.js';
+  import { getNavHeight } from '../utils/scrollUtils.js';
 
   const sectionNames = {
     gallery: 'Gallery',
@@ -31,26 +32,6 @@
     }
   }
 
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (el) {
-      const scrollContainer = document.querySelector('.page-scroll-wrapper');
-      const navWrapper = document.querySelector('.nav-wrapper');
-      if (scrollContainer && navWrapper) {
-        const navHeight = navWrapper.getBoundingClientRect().height;
-        const sectionsToggleHeight = window.innerWidth <= 1023 ? 40 : 0;
-        const offset = navHeight + sectionsToggleHeight;
-        const elPosition = el.offsetTop;
-        scrollContainer.scrollTo({
-          top: elPosition - offset,
-          behavior: 'smooth'
-        });
-      } else {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-  }
-
   $: filteredItems = selectedCategory === 'all'
     ? galleryItems
     : galleryItems.filter(item => item.category === selectedCategory);
@@ -59,14 +40,16 @@
     const ids = ['gallery', 'commissions', 'tos'];
     const scrollContainer = document.querySelector('.page-scroll-wrapper');
 
-    function getNavHeight() {
-      const nav = document.querySelector('.nav-wrapper');
-      return nav ? nav.getBoundingClientRect().height : 0;
-    }
-
     function updateActiveSection() {
       const threshold = getNavHeight() + 124;
       let currentId = ids[0];
+      
+      // Check if we're at the bottom of the scroll container
+      const scrollTop = scrollContainer.scrollTop;
+      const scrollHeight = scrollContainer.scrollHeight;
+      const clientHeight = scrollContainer.clientHeight;
+      const atBottom = scrollHeight - scrollTop - clientHeight < 50;
+      
       for (const id of ids) {
         const el = document.getElementById(id);
         if (!el) continue;
@@ -75,6 +58,12 @@
           currentId = id;
         }
       }
+      
+      // If at bottom, always use the last section
+      if (atBottom) {
+        currentId = ids[ids.length - 1];
+      }
+      
       artActiveSection.set(sectionNames[currentId]);
     }
 
