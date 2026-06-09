@@ -32,10 +32,6 @@
     menuOpen = !menuOpen;
   }
 
-  function toggleArtSections() {
-    artSectionsOpen = !artSectionsOpen;
-  }
-
   function scrollToArtSection(id) {
     // If not on art page, navigate to art page first
     if (clickedLink !== '#/art') {
